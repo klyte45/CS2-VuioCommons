@@ -47,6 +47,35 @@ export type PropsEllipsesTextInput = {
     "className"?: string
 } & InputHTMLAttributes<PropsEllipsesTextInput>
 
+type PropsToolButton = {
+    focusKey?: UniqueFocusKey | null
+    src: string
+    selected?: boolean
+    multiSelect?: boolean
+    disabled?: boolean
+    tooltip?: string | JSX.Element | null
+    selectSound?: any
+    uiTag?: string
+    className?: string
+    children?: string | JSX.Element | JSX.Element[]
+    onSelect?: (x: any) => any,
+} & HTMLAttributes<any>
+
+type PropsStepToolButton = {
+    focusKey?: UniqueFocusKey | null
+    selectedValue: number
+    values: number[]
+    tooltip?: string | null
+    uiTag?: string
+    onSelect?: (x: any) => any,
+} & HTMLAttributes<any>
+
+type PropsSection = {
+    title?: string | null
+    uiTag?: string
+    children: string | JSX.Element | JSX.Element[]
+}
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -68,6 +97,12 @@ const registryIndex = {
     themeGamepadToolOptions: ["game-ui/game/components/tool-options/tool-button/tool-button.module.scss", "classes"],
     Tooltip: ["game-ui/common/tooltip/tooltip.tsx", "Tooltip"],
     EllipsisTextInput: ['game-ui/common/input/text/ellipsis-text-input/ellipsis-text-input.tsx', "EllipsisTextInput"],
+    Section: ["game-ui/game/components/tool-options/mouse-tool-options/mouse-tool-options.tsx", "Section"],
+    ToolButton: ["game-ui/game/components/tool-options/tool-button/tool-button.tsx", "ToolButton"],
+    StepToolButton: ["game-ui/game/components/tool-options/tool-button/tool-button.tsx", "StepToolButton"],
+    toolButtonTheme: ["game-ui/game/components/tool-options/tool-button/tool-button.module.scss", "classes"],
+    mouseToolOptionsTheme: ["game-ui/game/components/tool-options/mouse-tool-options/mouse-tool-options.module.scss", "classes"],
+    assetGridTheme: ["game-ui/game/components/asset-menu/asset-grid/asset-grid.module.scss", "classes"],
 }
 
 
@@ -110,4 +145,14 @@ export class VanillaComponentResolver {
     public get useUniqueFocusKey(): (focusKey: FocusKey, debugName: string) => UniqueFocusKey | null { return this.cachedData["useUniqueFocusKey"] ?? this.updateCache("useUniqueFocusKey") }
 
 
-} 
+    public get Section(): (props: PropsSection) => JSX.Element { return this.cachedData["Section"] ?? this.updateCache("Section") }
+    public get ToolButton(): (props: PropsToolButton) => JSX.Element { return this.cachedData["ToolButton"] ?? this.updateCache("ToolButton") }
+    public get StepToolButton(): (props: PropsStepToolButton) => JSX.Element { return this.cachedData["StepToolButton"] ?? this.updateCache("StepToolButton") }
+
+    public get toolButtonTheme(): Theme | any { return this.cachedData["toolButtonTheme"] ?? this.updateCache("toolButtonTheme") }
+    public get mouseToolOptionsTheme(): Theme | any { return this.cachedData["mouseToolOptionsTheme"] ?? this.updateCache("mouseToolOptionsTheme") }
+    public get assetGridTheme(): Theme | any { return this.cachedData["assetGridTheme"] ?? this.updateCache("assetGridTheme") }
+}
+
+
+
