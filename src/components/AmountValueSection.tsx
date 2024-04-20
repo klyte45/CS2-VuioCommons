@@ -2,18 +2,25 @@ import { Component } from "react";
 import { VanillaComponentResolver } from "../VanillaComponentResolver";
 
 type AmountValueSectionProps = {
-    title: string;
+    title?: string | JSX.Element;
     down: {
-        tooltip: string;
+        tooltip?: string;
         onSelect: () => any;
         disabledFn?: () => boolean;
     };
     up: {
-        tooltip: string;
+        tooltip?: string;
         onSelect: () => any;
         disabledFn?: () => boolean;
     };
     valueGetter: () => string;
+    actions?: {
+        icon: string,
+        onSelect: () => any,
+        tooltip?: string,
+        selected?: boolean,
+        disabledFn?: () => boolean
+    }[]
 };
 export class AmountValueSection extends Component<AmountValueSectionProps> {
 
@@ -32,7 +39,7 @@ export class AmountValueSection extends Component<AmountValueSectionProps> {
                     focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}
                     disabled={this.props.down.disabledFn?.()}
                 ></VanillaComponentResolver.instance.ToolButton>
-                <div className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}>{this.props.valueGetter()}</div>
+                <div className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField} style={this.props.title ? {} : { width: "247rem" }}>{this.props.valueGetter()}</div>
                 <VanillaComponentResolver.instance.ToolButton
                     className={VanillaComponentResolver.instance.mouseToolOptionsTheme.endButton}
                     tooltip={this.props.up.tooltip}
@@ -41,6 +48,21 @@ export class AmountValueSection extends Component<AmountValueSectionProps> {
                     focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}
                     disabled={this.props.up.disabledFn?.()}
                 ></VanillaComponentResolver.instance.ToolButton>
+                {
+                    <>
+                        {this.props.actions?.map((x, i) =>
+                            <VanillaComponentResolver.instance.ToolButton
+                                key={i}
+                                className={VanillaComponentResolver.instance.toolButtonTheme.button}
+                                tooltip={x.tooltip}
+                                onSelect={x.onSelect}
+                                src={x.icon}
+                                focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}
+                                disabled={x.disabledFn?.()}
+                            ></VanillaComponentResolver.instance.ToolButton>
+                        )}
+                    </>
+                }
             </VanillaComponentResolver.instance.Section>
         </>
 

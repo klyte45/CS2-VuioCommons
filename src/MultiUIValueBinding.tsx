@@ -7,6 +7,7 @@ export class MultiUIValueBinding<T> {
     }
     private internalValue?: T;
     private subscriptions: ((x: T) => Promise<any>)[] = []
+    private onUpdate = (x: T) => this.setInternalValue(x);
 
     setInternalValue(x: any) {
         this.internalValue = x;
@@ -14,9 +15,8 @@ export class MultiUIValueBinding<T> {
     }
 
     constructor(private propertyPrefix: string) {
-        engine.call(this.propertyPrefix + "?").then((x) => this.setInternalValue(x));
         engine.off(this.propertyPrefix + "->");
-        engine.on(this.propertyPrefix + "->", (x) => this.setInternalValue(x));
+        this.reactivate();
     }
 
     async set(newValue: T) {
@@ -24,11 +24,18 @@ export class MultiUIValueBinding<T> {
     }
 
     dispose() {
-        engine.off(this.propertyPrefix + "->");
+        engine.off(this.propertyPrefix + "->", this.onUpdate);
+        this.subscriptions = []
+    }
+    reactivate() {
+        this.subscriptions = []
+        engine.call(this.propertyPrefix + "?").then((x) => this.setInternalValue(x));
+        engine.off(this.propertyPrefix + "->", this.onUpdate);
+        engine.on(this.propertyPrefix + "->", this.onUpdate, this);
     }
 
     subscribe(fn: (x: T) => Promise<any>) {
-        this.subscriptions.unshift(fn);
+        this.subscriptions.push(fn);
     }
 
 }

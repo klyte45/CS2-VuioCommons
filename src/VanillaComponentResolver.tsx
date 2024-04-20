@@ -71,7 +71,7 @@ type PropsStepToolButton = {
 } & HTMLAttributes<any>
 
 type PropsSection = {
-    title?: string | null
+    title?: string | null | JSX.Element
     uiTag?: string
     children: string | JSX.Element | JSX.Element[]
 }
@@ -103,6 +103,9 @@ const registryIndex = {
     toolButtonTheme: ["game-ui/game/components/tool-options/tool-button/tool-button.module.scss", "classes"],
     mouseToolOptionsTheme: ["game-ui/game/components/tool-options/mouse-tool-options/mouse-tool-options.module.scss", "classes"],
     assetGridTheme: ["game-ui/game/components/asset-menu/asset-grid/asset-grid.module.scss", "classes"],
+    inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
+    ellipsisInput: ["game-ui/common/input/text/ellipsis-text-input/themes/default.module.scss", "classes"],
+    ellipsisInputAlt: ["game-ui/common/input/text/ellipsis-text-input/ellipsis-text-input.module.scss", "classes"],
 }
 
 
@@ -152,6 +155,9 @@ export class VanillaComponentResolver {
     public get toolButtonTheme(): Theme | any { return this.cachedData["toolButtonTheme"] ?? this.updateCache("toolButtonTheme") }
     public get mouseToolOptionsTheme(): Theme | any { return this.cachedData["mouseToolOptionsTheme"] ?? this.updateCache("mouseToolOptionsTheme") }
     public get assetGridTheme(): Theme | any { return this.cachedData["assetGridTheme"] ?? this.updateCache("assetGridTheme") }
+    public get inputField(): Theme | any { return this.cachedData["inputField"] ?? this.updateCache("inputField") }
+    public get ellipsisInput(): Theme | any { return this.cachedData["ellipsisInput"] ?? this.updateCache("ellipsisInput") }
+    public get ellipsisInputAlt(): Theme | any { return this.cachedData["ellipsisInputAlt"] ?? this.updateCache("ellipsisInputAlt") }
 }
 
 
