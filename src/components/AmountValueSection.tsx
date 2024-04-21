@@ -13,6 +13,7 @@ type AmountValueSectionProps = {
         onSelect: () => any;
         disabledFn?: () => boolean;
     };
+    widthContent?: number,
     valueGetter: () => string;
     actions?: {
         icon: string,
@@ -39,7 +40,7 @@ export class AmountValueSection extends Component<AmountValueSectionProps> {
                     focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}
                     disabled={this.props.down.disabledFn?.()}
                 ></VanillaComponentResolver.instance.ToolButton>
-                <div className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField} style={this.props.title ? {} : { width: "247rem" }}>{this.props.valueGetter()}</div>
+                <div className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField} style={this.props.widthContent!! > 20 && this.props.widthContent!! < 247 ? { width: this.props.widthContent + "rem" } : this.props.title ? {} : { width: "247rem" }}>{this.props.valueGetter()}</div>
                 <VanillaComponentResolver.instance.ToolButton
                     className={VanillaComponentResolver.instance.mouseToolOptionsTheme.endButton}
                     tooltip={this.props.up.tooltip}
