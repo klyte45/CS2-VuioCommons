@@ -4,6 +4,13 @@ import { getModule } from "cs2/modding";
 import { DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
 import { HTMLAttributes, InputHTMLAttributes } from "react";
 
+export type UIColorRGBA = {
+    r: number
+    g: number
+    b: number
+    a: number
+}
+
 type PropsToggleField = {
     "value": any,
     "disabled"?: boolean,
@@ -75,6 +82,36 @@ type PropsSection = {
     uiTag?: string
     children: string | JSX.Element | JSX.Element[]
 }
+type PropsColorPicker = {
+    label?: string | JSX.Element | JSX.Element[]
+    value: UIColorRGBA
+    showAlpha?: boolean
+    disabled?: boolean
+    onChange: (newVal: UIColorRGBA) => any
+} & Omit<HTMLAttributes<any>, "onChange">
+
+type PropsIntSlider = {
+    label?: string | JSX.Element | JSX.Element[]
+    value: number
+    min: number
+    max: number
+    disabled?: boolean
+    onChange?: (newVal: number) => any
+    onChangeStart?: (newVal: number) => any
+    onChangeEnd?: (newVal: number) => any
+} & Omit<HTMLAttributes<any>, "onChange">
+
+type PropsFloatSlider = {
+    label?: string | JSX.Element | JSX.Element[]
+    value: number
+    min: number
+    max: number
+    fractionDigits?: number
+    disabled?: boolean
+    onChange?: (newVal: number) => any
+    onChangeStart?: (newVal: number) => any
+    onChangeEnd?: (newVal: number) => any
+} & Omit<HTMLAttributes<any>, "onChange">
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -106,6 +143,9 @@ const registryIndex = {
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
     ellipsisInput: ["game-ui/common/input/text/ellipsis-text-input/themes/default.module.scss", "classes"],
     ellipsisInputAlt: ["game-ui/common/input/text/ellipsis-text-input/ellipsis-text-input.module.scss", "classes"],
+    ColorPicker: ["game-ui/editor/widgets/fields/color-field.tsx", "ColorField"],
+    IntSlider: ["game-ui/editor/widgets/fields/number-slider-field.tsx", "IntSliderField"],
+    FloatSlider: ["game-ui/editor/widgets/fields/number-slider-field.tsx", "FloatSliderField"]
 }
 
 
@@ -158,6 +198,9 @@ export class VanillaComponentResolver {
     public get inputField(): Theme | any { return this.cachedData["inputField"] ?? this.updateCache("inputField") }
     public get ellipsisInput(): Theme | any { return this.cachedData["ellipsisInput"] ?? this.updateCache("ellipsisInput") }
     public get ellipsisInputAlt(): Theme | any { return this.cachedData["ellipsisInputAlt"] ?? this.updateCache("ellipsisInputAlt") }
+    public get ColorPicker(): (props: PropsColorPicker) => JSX.Element { return this.cachedData["ColorPicker"] ?? this.updateCache("ColorPicker") }
+    public get IntSlider(): (props: PropsIntSlider) => JSX.Element { return this.cachedData["IntSlider"] ?? this.updateCache("IntSlider") }
+    public get FloatSlider(): (props: PropsFloatSlider) => JSX.Element { return this.cachedData["FloatSlider"] ?? this.updateCache("FloatSlider") }
 }
 
 
