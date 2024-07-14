@@ -64,7 +64,7 @@ export class VectorSectionEditable extends Component<VectorSectionEditableProps,
                             editingValue[i] = x;
                             return this.setState({ editingIdx: i, editingValue });
                         }}>
-                            <input key={i}
+                            {this.state.editingIdx == i && <input key={i}
                                 className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
                                 style={{
                                     display: "flex",
@@ -86,20 +86,26 @@ export class VectorSectionEditable extends Component<VectorSectionEditableProps,
                                     newVal[i] = e.target.value;
                                     this.setState({ editingValue: newVal });
                                 }}
+                                autoFocus={true}
+                                onFocus={(x) => x.target.selectionStart = x.target.value.length}
+                                onDoubleClick={(x) => {
+                                    x.currentTarget.selectionStart = 0;
+                                    x.currentTarget.selectionEnd = x.currentTarget.value.length;
+                                }}
                                 onBlur={(x) => onBlur(x.target)}
                                 onKeyDownCapture={(x) => {
                                     if (x.key === "Enter") {
                                         onBlur(x.target);
                                         x.stopPropagation()
                                     } else if (x.key == "Escape") {
-                                        // this.setState({ editingValue: [], editingIdx: -1 });
-                                        // x.stopPropagation()
+                                        this.setState({ editingValue: [], editingIdx: -1 });
+                                        x.stopPropagation()
                                     }
-                                }} />
+                                }} />}
                         </div>
                     </div>;
                 })}
-            </VanillaComponentResolver.instance.Section>
+            </VanillaComponentResolver.instance.Section> 
         </>;
 
     }
