@@ -1,5 +1,6 @@
 
-import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
+import { FocusKey, LocalizedBounds, LocalizedFraction, LocalizedNumber, LocalizedString, LocElement, LocElementType, Theme, UniqueFocusKey } from "cs2/bindings";
+import { LocComponent } from "cs2/l10n";
 import { getModule } from "cs2/modding";
 import { DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
 import { HTMLAttributes, InputHTMLAttributes } from "react";
@@ -120,6 +121,19 @@ type PropsDescriptionTooltip = {
     children: JSX.Element
 }
 
+type PropsDropdownField<T> = {
+    props: {
+        items: (LocalizedBounds | LocalizedFraction | LocalizedString | LocalizedNumber) & { __Type: LocElementType }[],
+        value: T
+    },
+    parent: {
+        group: string,
+        path: string
+    },
+    group: string,
+    path: string
+} & Omit<HTMLAttributes<any>, "onChange">
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -155,7 +169,8 @@ const registryIndex = {
     FloatSlider: ["game-ui/editor/widgets/fields/number-slider-field.tsx", "FloatSliderField"],
     actionsSectionTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/actions-section.module.scss", "classes"],
     DescriptionTooltip: ["game-ui/common/tooltip/description-tooltip/description-tooltip.tsx", "DescriptionTooltip"],
-    actionButtonTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/action-button.module.scss", "classes"]
+    actionButtonTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/action-button.module.scss", "classes"],
+    DropdownField: ["game-ui/game/widgets/dropdown-field/dropdown-field.tsx", "BoundDropdownField"],
 }
 
 
@@ -214,7 +229,5 @@ export class VanillaComponentResolver {
     public get actionsSectionTheme(): Theme | any { return this.cachedData["actionsSectionTheme"] ?? this.updateCache("actionsSectionTheme") }
     public get DescriptionTooltip(): (props: PropsDescriptionTooltip) => JSX.Element { return this.cachedData["DescriptionTooltip"] ?? this.updateCache("DescriptionTooltip") }
     public get actionButtonTheme(): Theme | any { return this.cachedData["actionButtonTheme"] ?? this.updateCache("actionButtonTheme") }
+    public get DropdownField(): (props: PropsDropdownField<any>) => JSX.Element { return this.cachedData["DropdownField"] ?? this.updateCache("DropdownField") }
 }
-
-
-

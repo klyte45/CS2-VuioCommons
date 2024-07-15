@@ -8,6 +8,6 @@ export * from './src/MultiUIValueBinding'
 export * from './src/components/AmountValueSection'
 export * from './src/components/VectorSection'
 
-export * from './src/utils/MeasureUnitsUtils'
+export * from './src/utils/VanillaFnResolver'
 export * from './src/utils/name.utils'
 export * from './src/utils/Entity'
