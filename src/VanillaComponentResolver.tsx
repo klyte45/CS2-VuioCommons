@@ -131,6 +131,11 @@ type PropsDropdownField<T> = {
 type PropsEditorItemControl = { label: string, children?: JSX.Element | JSX.Element[] | string, styleContent?: React.CSSProperties }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
+type PropsStringInputField = { value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
+    onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
+} | {
+    onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
+})
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -173,6 +178,7 @@ const registryIndex = {
     editorItemModule: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
     DirectoryPickerButton: ["game-ui/editor/widgets/fields/directory-picker-button.tsx", "DirectoryPickerButton"],
     CommonButton: ["game-ui/common/input/button/button.tsx", "Button"],
+    StringInputField: ["game-ui/editor/widgets/fields/string-input-field.tsx", "StringInputField"],
 }
 
 
@@ -242,5 +248,6 @@ export class VanillaComponentResolver {
     </VanillaComponentResolver.instance.FocusableEditorItem>
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get CommonButton(): (props: ButtonProps) => JSX.Element { return this.cachedData["CommonButton"] ?? this.updateCache("CommonButton") }
+    public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
 
 }
