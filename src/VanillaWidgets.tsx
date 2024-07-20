@@ -58,6 +58,11 @@ type PropsStringInputField = { value: string, disabled?: boolean, onChange: (s: 
     onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
 })
 type PropsToggleField = { label: string, value: boolean, disabled?: boolean, onChange: (x: boolean) => any }
+type PropsFloatInputField = { label: string, value: number, min?: number, max?: number, fractionDigits?: number, disabled?: boolean, onChange: (s: number) => any, className?: string, maxLength?: number } & ({
+    onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
+} | {
+    onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
+})
 
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
@@ -71,6 +76,7 @@ const registryIndex = {
     DirectoryPickerButton: ["game-ui/editor/widgets/fields/directory-picker-button.tsx", "DirectoryPickerButton"],
     StringInputField: ["game-ui/editor/widgets/fields/string-input-field.tsx", "StringInputField"],
     ToggleField: ["game-ui/editor/widgets/fields/toggle-field.tsx", "ToggleField"],
+    FloatInputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "FloatInputField"],
 }
 
 
@@ -107,5 +113,6 @@ export class VanillaWidgets {
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
+    public get FloatInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["FloatInputField"] ?? this.updateCache("FloatInputField") }
 
 }
