@@ -1,17 +1,8 @@
 
-import { DropdownItem, FocusKey, LocalizedBounds, LocalizedFraction, LocalizedNumber, LocalizedString, LocElement, LocElementType, Theme, UniqueFocusKey } from "cs2/bindings";
-import { LocComponent } from "cs2/l10n";
+import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
 import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
 import { HTMLAttributes, InputHTMLAttributes } from "react";
-
-export type UIColorRGBA = {
-    r: number
-    g: number
-    b: number
-    a: number
-}
-
 type PropsToggleField = {
     "value": any,
     "disabled"?: boolean,
@@ -83,36 +74,6 @@ type PropsSection = {
     uiTag?: string
     children: string | JSX.Element | JSX.Element[]
 }
-type PropsColorPicker = {
-    label?: string | JSX.Element | JSX.Element[]
-    value: UIColorRGBA
-    showAlpha?: boolean
-    disabled?: boolean
-    onChange: (newVal: UIColorRGBA) => any
-} & Omit<HTMLAttributes<any>, "onChange">
-
-type PropsIntSlider = {
-    label?: string | JSX.Element | JSX.Element[]
-    value: number
-    min: number
-    max: number
-    disabled?: boolean
-    onChange?: (newVal: number) => any
-    onChangeStart?: (newVal: number) => any
-    onChangeEnd?: (newVal: number) => any
-} & Omit<HTMLAttributes<any>, "onChange">
-
-type PropsFloatSlider = {
-    label?: string | JSX.Element | JSX.Element[]
-    value: number
-    min: number
-    max: number
-    fractionDigits?: number
-    disabled?: boolean
-    onChange?: (newVal: number) => any
-    onChangeStart?: (newVal: number) => any
-    onChangeEnd?: (newVal: number) => any
-} & Omit<HTMLAttributes<any>, "onChange">
 
 type PropsDescriptionTooltip = {
     title: string | JSX.Element
@@ -121,21 +82,6 @@ type PropsDescriptionTooltip = {
     children: JSX.Element
 }
 
-type PropsDropdownField<T> = {
-    items: DropdownItem<T>[],
-    value: T,
-    onChange?: (newVal: T) => any
-    disabled?: boolean
-} & Omit<HTMLAttributes<any>, "onChange">
-
-type PropsEditorItemControl = { label: string, children?: JSX.Element | JSX.Element[] | string, styleContent?: React.CSSProperties }
-type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
-type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
-type PropsStringInputField = { value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
-    onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
-} | {
-    onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
-})
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -151,7 +97,6 @@ const registryIndex = {
     FOCUS_AUTO: ["game-ui/common/focus/focus-key.ts", "FOCUS_AUTO"],
     useUniqueFocusKey: ["game-ui/common/focus/focus-key.ts", "useUniqueFocusKey"],
     Dropdown: ["game-ui/common/input/dropdown/dropdown.tsx", "Dropdown"],
-    themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     DropdownItem: ["game-ui/common/input/dropdown/items/dropdown-item.tsx", "DropdownItem"],
     DropdownToggle: ["game-ui/common/input/dropdown/dropdown-toggle.tsx", "DropdownToggle"],
     IconButton: ["game-ui/common/input/button/icon-button.tsx", "IconButton"],
@@ -164,21 +109,12 @@ const registryIndex = {
     toolButtonTheme: ["game-ui/game/components/tool-options/tool-button/tool-button.module.scss", "classes"],
     mouseToolOptionsTheme: ["game-ui/game/components/tool-options/mouse-tool-options/mouse-tool-options.module.scss", "classes"],
     assetGridTheme: ["game-ui/game/components/asset-menu/asset-grid/asset-grid.module.scss", "classes"],
-    inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
     ellipsisInput: ["game-ui/common/input/text/ellipsis-text-input/themes/default.module.scss", "classes"],
     ellipsisInputAlt: ["game-ui/common/input/text/ellipsis-text-input/ellipsis-text-input.module.scss", "classes"],
-    ColorPicker: ["game-ui/editor/widgets/fields/color-field.tsx", "ColorField"],
-    IntSlider: ["game-ui/editor/widgets/fields/number-slider-field.tsx", "IntSliderField"],
-    FloatSlider: ["game-ui/editor/widgets/fields/number-slider-field.tsx", "FloatSliderField"],
     actionsSectionTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/actions-section.module.scss", "classes"],
     DescriptionTooltip: ["game-ui/common/tooltip/description-tooltip/description-tooltip.tsx", "DescriptionTooltip"],
     actionButtonTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/action-button.module.scss", "classes"],
-    DropdownField: ["game-ui/editor/widgets/fields/dropdown-field.tsx", "DropdownField"],
-    FocusableEditorItem: ["game-ui/editor/widgets/item/editor-item.tsx", "FocusableEditorItem"],
-    editorItemModule: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
-    DirectoryPickerButton: ["game-ui/editor/widgets/fields/directory-picker-button.tsx", "DirectoryPickerButton"],
     CommonButton: ["game-ui/common/input/button/button.tsx", "Button"],
-    StringInputField: ["game-ui/editor/widgets/fields/string-input-field.tsx", "StringInputField"],
 }
 
 
@@ -212,7 +148,6 @@ export class VanillaComponentResolver {
 
 
     public get themeToggleLine(): Theme | any { return this.cachedData["themeToggleLine"] ?? this.updateCache("themeToggleLine") }
-    public get themeDropdown(): Theme | any { return this.cachedData["themeDropdown"] ?? this.updateCache("themeDropdown") }
     public get themeGamepadToolOptions(): Theme | any { return this.cachedData["themeGamepadToolOptions"] ?? this.updateCache("themeGamepadToolOptions") }
 
 
@@ -228,26 +163,11 @@ export class VanillaComponentResolver {
     public get toolButtonTheme(): Theme | any { return this.cachedData["toolButtonTheme"] ?? this.updateCache("toolButtonTheme") }
     public get mouseToolOptionsTheme(): Theme | any { return this.cachedData["mouseToolOptionsTheme"] ?? this.updateCache("mouseToolOptionsTheme") }
     public get assetGridTheme(): Theme | any { return this.cachedData["assetGridTheme"] ?? this.updateCache("assetGridTheme") }
-    public get inputField(): Theme | any { return this.cachedData["inputField"] ?? this.updateCache("inputField") }
     public get ellipsisInput(): Theme | any { return this.cachedData["ellipsisInput"] ?? this.updateCache("ellipsisInput") }
     public get ellipsisInputAlt(): Theme | any { return this.cachedData["ellipsisInputAlt"] ?? this.updateCache("ellipsisInputAlt") }
-    public get ColorPicker(): (props: PropsColorPicker) => JSX.Element { return this.cachedData["ColorPicker"] ?? this.updateCache("ColorPicker") }
-    public get IntSlider(): (props: PropsIntSlider) => JSX.Element { return this.cachedData["IntSlider"] ?? this.updateCache("IntSlider") }
-    public get FloatSlider(): (props: PropsFloatSlider) => JSX.Element { return this.cachedData["FloatSlider"] ?? this.updateCache("FloatSlider") }
     public get actionsSectionTheme(): Theme | any { return this.cachedData["actionsSectionTheme"] ?? this.updateCache("actionsSectionTheme") }
     public get DescriptionTooltip(): (props: PropsDescriptionTooltip) => JSX.Element { return this.cachedData["DescriptionTooltip"] ?? this.updateCache("DescriptionTooltip") }
     public get actionButtonTheme(): Theme | any { return this.cachedData["actionButtonTheme"] ?? this.updateCache("actionButtonTheme") }
-    public DropdownField<T>(): (props: PropsDropdownField<T>) => JSX.Element { return this.cachedData["DropdownField"] ?? this.updateCache("DropdownField") }
-    public get FocusableEditorItem(): (props: PropsFocusableEditorItem) => JSX.Element { return this.cachedData["FocusableEditorItem"] ?? this.updateCache("FocusableEditorItem") }
-    public get editorItemModule(): Theme | any { return this.cachedData["editorItemModule"] ?? this.updateCache("editorItemModule") }
-    public EditorItemRow = ({ label, children, styleContent }: PropsEditorItemControl) => <VanillaComponentResolver.instance.FocusableEditorItem focusKey={this.FOCUS_DISABLED}>
-        <div className={this.editorItemModule.row}>
-            <div className={this.editorItemModule.label}>{label}</div>
-            <div className={this.editorItemModule.control} style={styleContent} >{children}</div>
-        </div>
-    </VanillaComponentResolver.instance.FocusableEditorItem>
-    public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get CommonButton(): (props: ButtonProps) => JSX.Element { return this.cachedData["CommonButton"] ?? this.updateCache("CommonButton") }
-    public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
 
 }

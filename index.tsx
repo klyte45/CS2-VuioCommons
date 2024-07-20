@@ -4,6 +4,7 @@
 
 
 export * from './src/VanillaComponentResolver'
+export * from './src/VanillaWidgets'
 export * from './src/MultiUIValueBinding'
 export * from './src/components/AmountValueSection'
 export * from './src/components/VectorSection'
