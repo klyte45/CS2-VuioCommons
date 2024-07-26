@@ -92,6 +92,14 @@ type PropsHierarchyMenu = {
     onRenderedRangeChange?: (startIndex: number, endIndex: number) => any
 }
 
+type PropsEditorScrollable = {
+    className?: string,
+    style?: CSSProperties,
+    vertical?: boolean,
+    horizontal?: boolean,
+    children?: any
+}
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -106,6 +114,7 @@ const registryIndex = {
     ToggleField: ["game-ui/editor/widgets/fields/toggle-field.tsx", "ToggleField"],
     FloatInputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "FloatInputField"],
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
+    EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
 }
 
 
@@ -143,5 +152,6 @@ export class VanillaWidgets {
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get FloatInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["FloatInputField"] ?? this.updateCache("FloatInputField") }
     public get HierarchyMenu(): (props: PropsHierarchyMenu) => JSX.Element { return this.cachedData["HierarchyMenu"] ?? this.updateCache("HierarchyMenu") }
+    public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
 
 }
