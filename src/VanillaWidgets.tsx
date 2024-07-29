@@ -1,7 +1,7 @@
 
 import { DropdownItem, LocalizedString, LocElement, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
-import { CSSProperties, HTMLAttributes } from "react";
+import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import { VanillaComponentResolver } from "./VanillaComponentResolver";
 
 export type UIColorRGBA = {
@@ -97,7 +97,7 @@ type PropsEditorScrollable = {
     style?: CSSProperties,
     vertical?: boolean,
     horizontal?: boolean,
-    children?: any
+    children?: ReactNode
 }
 
 const registryIndex = {

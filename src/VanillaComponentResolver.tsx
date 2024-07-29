@@ -2,7 +2,7 @@
 import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
 import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
-import { HTMLAttributes, InputHTMLAttributes } from "react";
+import { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 type PropsToggleField = {
     "value": any,
     "disabled"?: boolean,
@@ -26,17 +26,15 @@ type PropsRadioGroupToggleField = {
     onToggleSelected?: (x: any) => any,
 } & HTMLAttributes<any>
 
-type PropsTooltipRow = {
-
-}
 type PropsTooltip = {
-    tooltip: string | JSX.Element | JSX.Element[]
+    tooltip: ReactNode
     disabled?: boolean
     theme?: Theme & any
     direction?: "up" | "down" | "left" | "right"
     alignment?: "left" | "right" | "center"
     className?: string
-    children: string | JSX.Element | JSX.Element[]
+    children: ReactNode
+    forceVisible?: boolean
 }
 
 export type PropsEllipsesTextInput = {
@@ -56,7 +54,7 @@ type PropsToolButton = {
     selectSound?: any
     uiTag?: string
     className?: string
-    children?: string | JSX.Element | JSX.Element[]
+    children?: ReactNode
     onSelect?: (x: any) => any,
 } & HTMLAttributes<any>
 
@@ -72,16 +70,27 @@ type PropsStepToolButton = {
 type PropsSection = {
     title?: string | null | JSX.Element
     uiTag?: string
-    children: string | JSX.Element | JSX.Element[]
+    children: ReactNode
 }
 
 type PropsDescriptionTooltip = {
     title: string | JSX.Element
     description: string | JSX.Element
-    content?: string | JSX.Element | JSX.Element[],
+    content?: ReactNode,
     children: JSX.Element
 }
 
+type DialogProps = {
+    wide?: boolean,
+    title?: ReactNode,
+    content?: ReactNode,
+    buttons?: ReactNode,
+    theme?: any,
+    zIndex?: number,
+    onClose?: () => any,
+    initialFocus?: any,
+    children: ReactNode
+}
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -115,6 +124,7 @@ const registryIndex = {
     DescriptionTooltip: ["game-ui/common/tooltip/description-tooltip/description-tooltip.tsx", "DescriptionTooltip"],
     actionButtonTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/action-button.module.scss", "classes"],
     CommonButton: ["game-ui/common/input/button/button.tsx", "Button"],
+    Dialog: ["game-ui/common/panel/dialog/dialog.tsx", "Dialog"],
 }
 
 
@@ -136,7 +146,7 @@ export class VanillaComponentResolver {
     public get RadioGroupToggleField(): (props: PropsRadioGroupToggleField) => JSX.Element { return this.cachedData["RadioGroupToggleField"] ?? this.updateCache("RadioGroupToggleField") }
     public get InfoSection(): (props: InfoSectionProps & { children: JSX.Element | JSX.Element[] }) => JSX.Element { return this.cachedData["InfoSection"] ?? this.updateCache("InfoSection") }
     public get InfoRow(): (props: InfoRowProps) => JSX.Element { return this.cachedData["InfoRow"] ?? this.updateCache("InfoRow") }
-    public get TooltipRow(): (props: PropsTooltipRow) => JSX.Element { return this.cachedData["TooltipRow"] ?? this.updateCache("TooltipRow") }
+    public get TooltipRow(): (props: any) => JSX.Element { return this.cachedData["TooltipRow"] ?? this.updateCache("TooltipRow") }
     public get ActiveFocusDiv(): (props: any) => JSX.Element { return this.cachedData["ActiveFocusDiv"] ?? this.updateCache("ActiveFocusDiv") }
     public get PassiveFocusDiv(): (props: any) => JSX.Element { return this.cachedData["PassiveFocusDiv"] ?? this.updateCache("PassiveFocusDiv") }
     public get Dropdown(): (props: DropdownProps) => JSX.Element { return this.cachedData["Dropdown"] ?? this.updateCache("Dropdown") }
@@ -169,5 +179,6 @@ export class VanillaComponentResolver {
     public get DescriptionTooltip(): (props: PropsDescriptionTooltip) => JSX.Element { return this.cachedData["DescriptionTooltip"] ?? this.updateCache("DescriptionTooltip") }
     public get actionButtonTheme(): Theme | any { return this.cachedData["actionButtonTheme"] ?? this.updateCache("actionButtonTheme") }
     public get CommonButton(): (props: ButtonProps) => JSX.Element { return this.cachedData["CommonButton"] ?? this.updateCache("CommonButton") }
+    public get Dialog(): (props: DialogProps) => JSX.Element { return this.cachedData["Dialog"] ?? this.updateCache("Dialog") }
 
 }
