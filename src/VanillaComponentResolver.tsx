@@ -92,6 +92,35 @@ type DialogProps = {
     children: ReactNode
 }
 
+type TabNavProps = {
+    tabs: string[],
+    selectedTab: string | null,
+    children: ReactNode,
+    onSelect?: (newIdx: number) => any
+}
+type TabBarProps = {
+    className?: string,
+    children: ReactNode
+}
+
+type TabProps = {
+    id: any,
+    selectedId: any,
+    disabled?: boolean,
+    locked?: boolean,
+    className?: string,
+    children: ReactNode,
+    onSelect: (id: string) => any
+}
+
+type PanelTitleBarProps = {
+    icon?: string,
+    theme?: Theme,
+    className?: string,
+    children?: ReactNode,
+    onCloseOverride?: (() => any) | null,
+} & HTMLAttributes<any>
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -125,6 +154,12 @@ const registryIndex = {
     actionButtonTheme: ["game-ui/game/components/selected-info-panel/selected-info-sections/shared-sections/actions-section/action-button.module.scss", "classes"],
     CommonButton: ["game-ui/common/input/button/button.tsx", "Button"],
     Dialog: ["game-ui/common/panel/dialog/dialog.tsx", "Dialog"],
+    TabNav: ["game-ui/common/tabs/tabs.tsx", "TabNav"],
+    TabBar: ["game-ui/common/tabs/tabs.tsx", "TabBar"],
+    Tab: ["game-ui/common/tabs/tabs.tsx", "Tab"],
+    toggleGamePanel: ["game-ui/game/data-binding/game-bindings.ts", "toggleGamePanel"],
+    gameMainScreenModule: ["game-ui/game/components/game-main-screen.module.scss", "classes"],
+    PanelTitleBar: ["game-ui/common/panel/panel-title-bar.tsx", "PanelTitleBar"],
 }
 
 
@@ -181,4 +216,14 @@ export class VanillaComponentResolver {
     public get CommonButton(): (props: ButtonProps) => JSX.Element { return this.cachedData["CommonButton"] ?? this.updateCache("CommonButton") }
     public get Dialog(): (props: DialogProps) => JSX.Element { return this.cachedData["Dialog"] ?? this.updateCache("Dialog") }
 
+
+    public get TabNav(): (props: TabNavProps) => JSX.Element { return this.cachedData["TabNav"] ?? this.updateCache("TabNav") }
+    public get TabBar(): (props: TabBarProps) => JSX.Element { return this.cachedData["TabBar"] ?? this.updateCache("TabBar") }
+    public get Tab(): (props: TabProps) => JSX.Element { return this.cachedData["Tab"] ?? this.updateCache("Tab") }
+
+
+    public get toggleGamePanel(): (panelId: string) => void { return this.cachedData["toggleGamePanel"] ?? this.updateCache("toggleGamePanel") }
+    public get gameMainScreenModule(): Theme | any { return this.cachedData["gameMainScreenModule"] ?? this.updateCache("gameMainScreenModule") }
+
+    public get PanelTitleBar(): (props: PanelTitleBarProps) => JSX.Element { return this.cachedData["PanelTitleBar"] ?? this.updateCache("PanelTitleBar") }
 }
