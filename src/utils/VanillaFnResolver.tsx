@@ -12,7 +12,7 @@ const registryIndex = {
             "createLocComponent": null as unknown as (displayName: LocComponent<any>['displayName'], renderString: LocComponent<any>['renderString'], propsAreEqual: LocComponent<any>['propsAreEqual']) => LocComponent<any>
         }
     },
-    units: {
+    measureUnits: {
         tsx: "game-ui/common/localization/units-us-customary.ts", fn: {
             "fahrenheit": null as unknown as (x: number) => number,
             "kelvin": null as unknown as (x: number) => number,
@@ -35,7 +35,7 @@ const registryIndex = {
             "LocalizedNumber": null as unknown as LocalizedNumber,
             "CustomLocalizedNumber": null as unknown as LocalizedNumber,
             "useNumberFormat": null as unknown as (unit: Unit, forceSignal: boolean) => (value: number) => string,
-            "formatInteger": null as unknown as (unit: Unit, value: number, forceSign?: boolean, thousandSeparator?: boolean) => (value: number) => string,
+            "formatInteger": null as unknown as (unit: Unit, value: number, forceSign?: boolean, thousandSeparator?: boolean) => string,
             "formatFloat": null as unknown as (locale: Localization, value: number, forceSign?: boolean, significantDitigs?: number, thousandSeparator?: boolean, simplifyZeroes?: boolean, thresoldDecimals?: number) => string,
         }
     },
@@ -67,11 +67,14 @@ export class VanillaFnResolver {
     public get localeFn() {
         return Object.fromEntries(Object.keys(registryIndex.locComponent.fn).map(x => [x, this.getOrUpdateCache("locComponent", x)])) as RegistryType['locComponent']['fn']
     }
-    public get units() {
+    public get measureUnits() {
         return Object.fromEntries(
-            Object.keys(registryIndex.units.fn).map(x => [x, this.getOrUpdateCache("units", x)])
-                .concat(Object.keys(registryIndex.unit.fn).map(x => [x, this.getOrUpdateCache("unit", x)]))
-        ) as RegistryType['units']['fn'] & RegistryType['unit']['fn']
+            Object.keys(registryIndex.measureUnits.fn).map(x => [x, this.getOrUpdateCache("measureUnits", x)])
+                .concat(Object.keys(registryIndex.unit.fn).map(x => [x, this.getOrUpdateCache("measureUnits", x)]))
+        ) as RegistryType['measureUnits']['fn'] & RegistryType['unit']['fn']
+    }
+    public get unit() {
+        return Object.fromEntries(Object.keys(registryIndex.unit.fn).map(x => [x, this.getOrUpdateCache("unit", x)])) as RegistryType['unit']['fn'];
     }
     public get localizedNumber() {
         return Object.fromEntries(Object.keys(registryIndex.localizedNumber.fn).map(x => [x, this.getOrUpdateCache("localizedNumber", x)])) as RegistryType['localizedNumber']['fn']
