@@ -44,7 +44,7 @@ export type PropsEllipsesTextInput = {
     "className"?: string
 } & InputHTMLAttributes<PropsEllipsesTextInput>
 
-type PropsToolButton = {
+export type PropsToolButton = {
     focusKey?: UniqueFocusKey | null
     src: string
     selected?: boolean
