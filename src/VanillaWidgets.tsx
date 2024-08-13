@@ -113,6 +113,7 @@ const registryIndex = {
     StringInputField: ["game-ui/editor/widgets/fields/string-input-field.tsx", "StringInputField"],
     ToggleField: ["game-ui/editor/widgets/fields/toggle-field.tsx", "ToggleField"],
     FloatInputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "FloatInputField"],
+    IntInputField: ["game-ui/editor/widgets/fields/int-input-field.tsx","IntInputField"],
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
 }
@@ -151,6 +152,7 @@ export class VanillaWidgets {
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get FloatInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["FloatInputField"] ?? this.updateCache("FloatInputField") }
+    public get IntInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["IntInputField"] ?? this.updateCache("IntInputField") }
     public get HierarchyMenu(): (props: PropsHierarchyMenu) => JSX.Element { return this.cachedData["HierarchyMenu"] ?? this.updateCache("HierarchyMenu") }
     public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
 
