@@ -70,6 +70,11 @@ type PropsFloatInputField = { label: string, value: number, min?: number, max?: 
 } | {
     onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
 })
+type PropsFloat2InputField = { label: string, value: { x: number, y: number }, disabled?: boolean, onChange: (s: { x: number, y: number }) => any } & ({
+    onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
+} | {
+    onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
+})
 
 export type HierarchyViewport = {
     displayName: LocElement,
@@ -113,7 +118,8 @@ const registryIndex = {
     StringInputField: ["game-ui/editor/widgets/fields/string-input-field.tsx", "StringInputField"],
     ToggleField: ["game-ui/editor/widgets/fields/toggle-field.tsx", "ToggleField"],
     FloatInputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "FloatInputField"],
-    IntInputField: ["game-ui/editor/widgets/fields/int-input-field.tsx","IntInputField"],
+    Float2InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float2InputField"],
+    IntInputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "IntInputField"],
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
 }
@@ -152,6 +158,7 @@ export class VanillaWidgets {
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get FloatInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["FloatInputField"] ?? this.updateCache("FloatInputField") }
+    public get Float2InputField(): (props: PropsFloat2InputField) => JSX.Element { return this.cachedData["Float2InputField"] ?? this.updateCache("Float2InputField") }
     public get IntInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["IntInputField"] ?? this.updateCache("IntInputField") }
     public get HierarchyMenu(): (props: PropsHierarchyMenu) => JSX.Element { return this.cachedData["HierarchyMenu"] ?? this.updateCache("HierarchyMenu") }
     public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
