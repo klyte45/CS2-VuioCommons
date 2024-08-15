@@ -49,9 +49,9 @@ type PropsFloatSlider = {
 } & Omit<HTMLAttributes<any>, "onChange">
 
 
-type PropsDropdownField<T> = {
+export type PropsDropdownField<T> = {
     items: DropdownItem<T>[],
-    value: T,
+    value?: T,
     onChange?: (newVal: T) => any
     disabled?: boolean
 } & Omit<HTMLAttributes<any>, "onChange">
