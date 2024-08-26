@@ -1,7 +1,7 @@
 
 import { DropdownItem, LocalizedString, LocElement, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes, MutableRefObject, ReactNode } from "react";
 import { VanillaComponentResolver } from "./VanillaComponentResolver";
 
 export type UIColorRGBA = {
@@ -59,7 +59,7 @@ export type PropsDropdownField<T> = {
 type PropsEditorItemControl = { label?: string, children?: JSX.Element | JSX.Element[] | string, styleContent?: React.CSSProperties }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
-type PropsStringInputField = { value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
+type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
     onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
 } | {
     onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
@@ -105,6 +105,30 @@ type PropsEditorScrollable = {
     children?: ReactNode
 }
 
+type ItemPickerObject = {
+    displayName: string,
+    image?: string,
+    tinted?: boolean,
+    directory: boolean,
+    favorite?: boolean
+}
+
+export type ItemPickerProps = {
+    ref?: MutableRefObject<any>
+    focusKey?: UniqueFocusKey,
+    selectedIndex?: number,
+    columnCount: number,
+    hasImages?: boolean,
+    data: {
+        get: (index: number) => ItemPickerObject, length: number
+    }
+    className?: string,
+    onRenderedRangeChange?: () => any,
+    onSelect: (x: number) => any,
+    selectOnFocus?: boolean,
+    onToggleFavorite?: (index: number, newValue: boolean) => any,
+}
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -122,6 +146,7 @@ const registryIndex = {
     IntInputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "IntInputField"],
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
+    ItemPicker: ["game-ui/editor/widgets/item-picker/item-picker.tsx", "ItemPicker"],
 }
 
 
@@ -162,5 +187,7 @@ export class VanillaWidgets {
     public get IntInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["IntInputField"] ?? this.updateCache("IntInputField") }
     public get HierarchyMenu(): (props: PropsHierarchyMenu) => JSX.Element { return this.cachedData["HierarchyMenu"] ?? this.updateCache("HierarchyMenu") }
     public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
+
+    public get ItemPicker(): (props: ItemPickerProps) => JSX.Element { return this.cachedData["ItemPicker"] ?? this.updateCache("ItemPicker") }
 
 }
