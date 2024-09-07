@@ -121,6 +121,30 @@ type PanelTitleBarProps = {
     onCloseOverride?: (() => any) | null,
 } & HTMLAttributes<any>
 
+type SliderProps = {
+    focusKey?: UniqueFocusKey | null
+    className?: string,
+    value: number,
+    start: number,
+    end: number,
+    valueTransformer?: (a: number, b: number, c: number) => number,
+    theme?: Theme,
+    onChange: (newValue: number) => any,
+    children?: ReactNode
+} & Omit<HTMLAttributes<any>, 'onChange'>
+
+type FloatInputProps = {
+    min?: number,
+    max?: number,
+    fractionDigits?: number,
+} & {
+    focusKey?: UniqueFocusKey | null
+    value: number,
+    onChange: (newValue: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any
+} & Omit<HTMLAttributes<any>, 'onChange'>
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -160,6 +184,11 @@ const registryIndex = {
     toggleGamePanel: ["game-ui/game/data-binding/game-bindings.ts", "toggleGamePanel"],
     gameMainScreenModule: ["game-ui/game/components/game-main-screen.module.scss", "classes"],
     PanelTitleBar: ["game-ui/common/panel/panel-title-bar.tsx", "PanelTitleBar"],
+    Slider: ["game-ui/common/input/slider/slider.tsx", "Slider"],
+    sliderTheme: ["game-ui/editor/themes/editor-slider.module.scss", "classes"],
+    FloatInput: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
+    editorItemTheme: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
+
 }
 
 
@@ -226,4 +255,8 @@ export class VanillaComponentResolver {
     public get gameMainScreenModule(): Theme | any { return this.cachedData["gameMainScreenModule"] ?? this.updateCache("gameMainScreenModule") }
 
     public get PanelTitleBar(): (props: PanelTitleBarProps) => JSX.Element { return this.cachedData["PanelTitleBar"] ?? this.updateCache("PanelTitleBar") }
+    public get Slider(): (props: SliderProps) => JSX.Element { return this.cachedData["Slider"] ?? this.updateCache("Slider") }
+    public get sliderTheme(): Theme | any { return this.cachedData["sliderTheme"] ?? this.updateCache("sliderTheme") }
+    public get FloatInput(): (props: FloatInputProps) => JSX.Element { return this.cachedData["FloatInput"] ?? this.updateCache("FloatInput") }
+    public get editorItemTheme(): Theme | any { return this.cachedData["editorItemTheme"] ?? this.updateCache("editorItemTheme") }
 }
