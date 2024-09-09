@@ -3,6 +3,7 @@ import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
 import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
 import { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import { Color01, ColorHSVA } from "./utils/ColorUtils";
 type PropsToggleField = {
     "value": any,
     "disabled"?: boolean,
@@ -145,6 +146,18 @@ type FloatInputProps = {
     onBlur?: () => any
 } & Omit<HTMLAttributes<any>, 'onChange'>
 
+type ColorPickerProps = {
+    focusKey?: UniqueFocusKey | null
+    color: ColorHSVA,
+    alpha?: boolean,
+    colorWheel?: boolean,
+    sliderTextInput?: boolean,
+    preview?: "None" | "Current" | "CurrentAndLast",
+    mode?: "Hsv" | "RgbFloat" | "RgbByte",
+    hexInput?: boolean,
+    onChange: (x: ColorHSVA) => any,
+    allowFocusExit?: boolean
+}
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -188,6 +201,7 @@ const registryIndex = {
     sliderTheme: ["game-ui/editor/themes/editor-slider.module.scss", "classes"],
     FloatInput: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
     editorItemTheme: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
+    ColorPicker: ["game-ui/common/input/color-picker/color-picker/color-picker.tsx", "ColorPicker"]
 
 }
 
@@ -259,4 +273,5 @@ export class VanillaComponentResolver {
     public get sliderTheme(): Theme | any { return this.cachedData["sliderTheme"] ?? this.updateCache("sliderTheme") }
     public get FloatInput(): (props: FloatInputProps) => JSX.Element { return this.cachedData["FloatInput"] ?? this.updateCache("FloatInput") }
     public get editorItemTheme(): Theme | any { return this.cachedData["editorItemTheme"] ?? this.updateCache("editorItemTheme") }
+    public get ColorPicker(): (props: ColorPickerProps) => JSX.Element { return this.cachedData["ColorPicker"] ?? this.updateCache("ColorPicker") }
 }

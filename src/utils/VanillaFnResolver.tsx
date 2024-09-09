@@ -2,8 +2,27 @@
 import { LocalizedNumber, LocElement, Unit } from "cs2/bindings";
 import { Localization, LocComponent, useCachedLocalization } from "cs2/l10n";
 import { getModule } from "cs2/modding";
+import { Color01, ColorHSVA } from "./ColorUtils";
 
 const registryIndex = {
+    color: {
+        tsx: "game-ui/common/color.ts",
+        fn: {
+            "rgb": null as unknown as (r255: number, g255: number, b255: number) => Color01,
+            "buildCssLinearGradient": null as unknown as (e: { stops: { color: (string | Color01), offset: number }[] }, mode: string) => string,
+            "formatColor": null as unknown as (rgba: Color01) => string,
+            "formatHexColor": null as unknown as (rgba: Color01) => string,
+            "hsvaToRgba": null as unknown as (hsva: ColorHSVA) => Color01,
+            "rgbaToHsva": null as unknown as (hsva: Color01, prevHue?: number) => ColorHSVA,
+            "isAchromatic": null as unknown as (rgba: Color01) => boolean,
+            "isColorEqual": null as unknown as (rgba: Color01, rgba2: Color01) => boolean,
+            "lerpColor": null as unknown as (src: Color01, dst: Color01, factor: number) => Color01,
+            "lerpHsva": null as unknown as (src: ColorHSVA, dst: ColorHSVA, factor: number) => ColorHSVA,
+            "parseHexColor": null as unknown as (strColor: string) => Color01,
+            "parseRgba": null as unknown as (strColor: string) => Color01,
+
+        }
+    },
     locComponent: {
         tsx: "game-ui/common/localization/loc-component.tsx",
         fn: {
@@ -81,6 +100,9 @@ export class VanillaFnResolver {
     }
     public get localization() {
         return Object.fromEntries(Object.keys(registryIndex.localization.fn).map(x => [x, this.getOrUpdateCache("localization", x)])) as RegistryType['localization']['fn']
+    }
+    public get color() {
+        return Object.fromEntries(Object.keys(registryIndex.color.fn).map(x => [x, this.getOrUpdateCache("color", x)])) as RegistryType['color']['fn']
     }
 }
 
