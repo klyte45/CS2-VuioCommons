@@ -56,7 +56,7 @@ export type PropsDropdownField<T> = {
     disabled?: boolean
 } & Omit<HTMLAttributes<any>, "onChange">
 
-type PropsEditorItemControl = { label?: string, children?: JSX.Element | JSX.Element[] | string, styleContent?: React.CSSProperties }
+type PropsEditorItemControl = { label?: string, children?: ReactNode, styleContent?: React.CSSProperties }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
 type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
