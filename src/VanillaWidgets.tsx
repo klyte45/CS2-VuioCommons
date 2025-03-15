@@ -175,10 +175,12 @@ export class VanillaWidgets {
     public get FocusableEditorItem(): (props: PropsFocusableEditorItem) => JSX.Element { return this.cachedData["FocusableEditorItem"] ?? this.updateCache("FocusableEditorItem") }
     public get editorItemModule(): Theme | any { return this.cachedData["editorItemModule"] ?? this.updateCache("editorItemModule") }
     public EditorItemRow = ({ label, children, styleContent }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
+        <this.EditorItemRowNoFocus label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
+    </VanillaWidgets.instance.FocusableEditorItem>
+    public EditorItemRowNoFocus = ({ label, children, styleContent }: PropsEditorItemControl) =>
         <div className={this.editorItemModule.row} style={label ? {} : styleContent}>
             {label ? <><div className={this.editorItemModule.label}>{label}</div><div className={this.editorItemModule.control} style={styleContent}>{children}</div></> : children}
         </div>
-    </VanillaWidgets.instance.FocusableEditorItem>
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
