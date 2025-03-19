@@ -37,7 +37,7 @@ export class VectorSectionEditable extends Component<VectorSectionEditableProps,
 
     render() {
         const formattedVals = this.props.valueGetterFormatted();
-        const width = `${68 * 3 / formattedVals?.length ?? 1}rem`;
+        const width = `${68 * 3 / (formattedVals?.length || 1)}rem`;
         return <>
             <VanillaComponentResolver.instance.Section title={this.props.title}>
                 {this.props.valueGetter()?.map((x, i) => {

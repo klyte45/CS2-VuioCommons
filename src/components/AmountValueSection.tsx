@@ -26,7 +26,7 @@ type AmountValueSectionProps = {
 export class AmountValueSection extends Component<AmountValueSectionProps> {
 
     render() {
-        const baseUrl = "coui://GameUI/Media/Glyphs/";
+        const baseUrl = "assetdb://GameUI/Media/Glyphs/";
         const arrowDownSrc = baseUrl + "ThickStrokeArrowDown.svg";
         const arrowUpSrc = baseUrl + "ThickStrokeArrowUp.svg";
 
