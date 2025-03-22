@@ -146,6 +146,17 @@ type FloatInputProps = {
     onBlur?: () => any
 } & Omit<HTMLAttributes<any>, 'onChange'>
 
+type IntInputProps = {
+    min?: number,
+    max?: number
+} & {
+    focusKey?: UniqueFocusKey | null
+    value: number,
+    onChange: (newValue: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any
+} & Omit<HTMLAttributes<any>, 'onChange'>
+
 type ColorPickerProps = {
     focusKey?: UniqueFocusKey | null
     color: ColorHSVA,
@@ -200,6 +211,7 @@ const registryIndex = {
     Slider: ["game-ui/common/input/slider/slider.tsx", "Slider"],
     sliderTheme: ["game-ui/editor/themes/editor-slider.module.scss", "classes"],
     FloatInput: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
+    IntInput: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
     editorItemTheme: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
     ColorPicker: ["game-ui/common/input/color-picker/color-picker/color-picker.tsx", "ColorPicker"]
 
@@ -272,6 +284,7 @@ export class VanillaComponentResolver {
     public get Slider(): (props: SliderProps) => JSX.Element { return this.cachedData["Slider"] ?? this.updateCache("Slider") }
     public get sliderTheme(): Theme | any { return this.cachedData["sliderTheme"] ?? this.updateCache("sliderTheme") }
     public get FloatInput(): (props: FloatInputProps) => JSX.Element { return this.cachedData["FloatInput"] ?? this.updateCache("FloatInput") }
+    public get IntInput(): (props: IntInputProps) => JSX.Element { return this.cachedData["IntInput"] ?? this.updateCache("IntInput") }
     public get editorItemTheme(): Theme | any { return this.cachedData["editorItemTheme"] ?? this.updateCache("editorItemTheme") }
     public get ColorPicker(): (props: ColorPickerProps) => JSX.Element { return this.cachedData["ColorPicker"] ?? this.updateCache("ColorPicker") }
 }

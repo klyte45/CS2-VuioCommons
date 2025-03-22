@@ -29,7 +29,7 @@ export class MultiUIValueBinding<T, U = T> {
     }
     reactivate() {
         this.subscriptions = []
-        engine.call(this.propertyPrefix + "?").then((x) => this.setInternalValue(x)).catch((y)=>console.warn(`ERR: ${this.propertyPrefix}\n${y}`));
+        engine.call(this.propertyPrefix + "?").then((x) => this.setInternalValue(x)).catch((y) => console.warn(`ERR: ${this.propertyPrefix}\n${y}`));
         engine.off(this.propertyPrefix + "->", this.onUpdate);
         engine.on(this.propertyPrefix + "->", this.onUpdate, this);
     }
