@@ -56,7 +56,7 @@ export type PropsDropdownField<T> = {
     disabled?: boolean
 } & Omit<HTMLAttributes<any>, "onChange">
 
-type PropsEditorItemControl = { label?: string, children?: ReactNode, styleContent?: React.CSSProperties }
+type PropsEditorItemControl = { label?: string, children?: ReactNode, styleContent?: React.CSSProperties, className?: string }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
 type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
@@ -177,8 +177,8 @@ export class VanillaWidgets {
     public EditorItemRow = ({ label, children, styleContent }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
         <this.EditorItemRowNoFocus label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
     </VanillaWidgets.instance.FocusableEditorItem>
-    public EditorItemRowNoFocus = ({ label, children, styleContent }: PropsEditorItemControl) =>
-        <div className={this.editorItemModule.row} style={label ? {} : styleContent}>
+    public EditorItemRowNoFocus = ({ label, children, styleContent, className }: PropsEditorItemControl) =>
+        <div className={[this.editorItemModule.row, className].join(" ")} style={label ? {} : styleContent}>
             {label ? <><div className={this.editorItemModule.label}>{label}</div><div className={this.editorItemModule.control} style={styleContent}>{children}</div></> : children}
         </div>
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
