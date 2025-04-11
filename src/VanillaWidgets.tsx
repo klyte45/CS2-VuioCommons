@@ -137,6 +137,17 @@ export type CheckboxProps = {
     className?: string
 }
 
+export type IntInputStandaloneProps = {
+    className?: string,
+    min?: number,
+    max?: number,
+    value: number,
+    disabled?: boolean,
+    onChange?: (x: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any,
+}
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -156,6 +167,7 @@ const registryIndex = {
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
     ItemPicker: ["game-ui/editor/widgets/item-picker/item-picker.tsx", "ItemPicker"],
     Checkbox: ["game-ui/common/input/toggle/checkbox/checkbox.tsx", "Checkbox"],
+    IntInputStandalone: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
 }
 
 
@@ -183,8 +195,8 @@ export class VanillaWidgets {
     public DropdownField<T>(): (props: PropsDropdownField<T>) => JSX.Element { return this.cachedData["DropdownField"] ?? this.updateCache("DropdownField") }
     public get FocusableEditorItem(): (props: PropsFocusableEditorItem) => JSX.Element { return this.cachedData["FocusableEditorItem"] ?? this.updateCache("FocusableEditorItem") }
     public get editorItemModule(): Theme | any { return this.cachedData["editorItemModule"] ?? this.updateCache("editorItemModule") }
-    public EditorItemRow = ({ label, children, styleContent }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
-        <this.EditorItemRowNoFocus label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
+    public EditorItemRow = ({ label, children, styleContent, className }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
+        <this.EditorItemRowNoFocus className={className} label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
     </VanillaWidgets.instance.FocusableEditorItem>
     public EditorItemRowNoFocus = ({ label, children, styleContent, className }: PropsEditorItemControl) =>
         <div className={[this.editorItemModule.row, className].join(" ")} style={label ? {} : styleContent}>
@@ -201,5 +213,6 @@ export class VanillaWidgets {
 
     public get ItemPicker(): (props: ItemPickerProps) => JSX.Element { return this.cachedData["ItemPicker"] ?? this.updateCache("ItemPicker") }
     public get Checkbox(): (props: CheckboxProps) => JSX.Element { return this.cachedData["Checkbox"] ?? this.updateCache("Checkbox") }
+    public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
 
 }
