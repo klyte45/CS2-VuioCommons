@@ -138,9 +138,22 @@ export type CheckboxProps = {
 }
 
 export type IntInputStandaloneProps = {
+    style?: React.CSSProperties
     className?: string,
     min?: number,
     max?: number,
+    value: number,
+    disabled?: boolean,
+    onChange?: (x: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any,
+}
+export type FloatInputStandaloneProps = {
+    style?: React.CSSProperties
+    className?: string,
+    min?: number,
+    max?: number,
+    fractionDigits?: number,
     value: number,
     disabled?: boolean,
     onChange?: (x: number) => any,
@@ -168,6 +181,7 @@ const registryIndex = {
     ItemPicker: ["game-ui/editor/widgets/item-picker/item-picker.tsx", "ItemPicker"],
     Checkbox: ["game-ui/common/input/toggle/checkbox/checkbox.tsx", "Checkbox"],
     IntInputStandalone: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
+    FloatInputStandalone: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
 }
 
 
@@ -214,5 +228,6 @@ export class VanillaWidgets {
     public get ItemPicker(): (props: ItemPickerProps) => JSX.Element { return this.cachedData["ItemPicker"] ?? this.updateCache("ItemPicker") }
     public get Checkbox(): (props: CheckboxProps) => JSX.Element { return this.cachedData["Checkbox"] ?? this.updateCache("Checkbox") }
     public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
+    public get FloatInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["FloatInputStandalone"] ?? this.updateCache("FloatInputStandalone") }
 
 }

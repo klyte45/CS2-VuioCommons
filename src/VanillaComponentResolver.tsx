@@ -258,7 +258,7 @@ export class VanillaComponentResolver {
     public get RadioToggle(): (props: PropsRadioToggle) => JSX.Element { return this.cachedData["RadioToggle"] ?? this.updateCache("RadioToggle") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get RadioGroupToggleField(): (props: PropsRadioGroupToggleField) => JSX.Element { return this.cachedData["RadioGroupToggleField"] ?? this.updateCache("RadioGroupToggleField") }
-    public get InfoSection(): (props: InfoSectionProps & { children: JSX.Element | JSX.Element[] }) => JSX.Element { return this.cachedData["InfoSection"] ?? this.updateCache("InfoSection") }
+    public get InfoSection(): (props: InfoSectionProps & { children: ReactNode }) => JSX.Element { return this.cachedData["InfoSection"] ?? this.updateCache("InfoSection") }
     public get InfoRow(): (props: InfoRowProps) => JSX.Element { return this.cachedData["InfoRow"] ?? this.updateCache("InfoRow") }
     public get TooltipRow(): (props: any) => JSX.Element { return this.cachedData["TooltipRow"] ?? this.updateCache("TooltipRow") }
     public get ActiveFocusDiv(): (props: any) => JSX.Element { return this.cachedData["ActiveFocusDiv"] ?? this.updateCache("ActiveFocusDiv") }
