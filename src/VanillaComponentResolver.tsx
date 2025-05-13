@@ -146,6 +146,17 @@ type FloatInputProps = {
     onBlur?: () => any
 } & Omit<HTMLAttributes<any>, 'onChange'>
 
+type IntInputProps = {
+    min?: number,
+    max?: number
+} & {
+    focusKey?: UniqueFocusKey | null
+    value: number,
+    onChange: (newValue: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any
+} & Omit<HTMLAttributes<any>, 'onChange'>
+
 type ColorPickerProps = {
     focusKey?: UniqueFocusKey | null
     color: ColorHSVA,
@@ -158,6 +169,24 @@ type ColorPickerProps = {
     onChange: (x: ColorHSVA) => any,
     allowFocusExit?: boolean
 }
+
+
+type BaseVectorInputFieldProps<T> = {
+    label: string,
+    value: T,
+    min?: T,
+    max?: T
+    disabled?: boolean,
+    onChange: (x: T) => any,
+}
+
+type Float2InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number }>
+type Float3InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number }>
+type Float4InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number, w: number }>
+type Int2InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number }>
+type Int3InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number }>
+type Int4InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number, w: number }>
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -200,8 +229,15 @@ const registryIndex = {
     Slider: ["game-ui/common/input/slider/slider.tsx", "Slider"],
     sliderTheme: ["game-ui/editor/themes/editor-slider.module.scss", "classes"],
     FloatInput: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
+    IntInput: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
     editorItemTheme: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
-    ColorPicker: ["game-ui/common/input/color-picker/color-picker/color-picker.tsx", "ColorPicker"]
+    ColorPicker: ["game-ui/common/input/color-picker/color-picker/color-picker.tsx", "ColorPicker"],
+    Float2InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float2InputField"],
+    Float3InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float3InputField"],
+    Float4InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float4InputField"],
+    Int2InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int2InputField"],
+    Int3InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int3InputField"],
+    Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"]
 
 }
 
@@ -272,6 +308,13 @@ export class VanillaComponentResolver {
     public get Slider(): (props: SliderProps) => JSX.Element { return this.cachedData["Slider"] ?? this.updateCache("Slider") }
     public get sliderTheme(): Theme | any { return this.cachedData["sliderTheme"] ?? this.updateCache("sliderTheme") }
     public get FloatInput(): (props: FloatInputProps) => JSX.Element { return this.cachedData["FloatInput"] ?? this.updateCache("FloatInput") }
+    public get IntInput(): (props: IntInputProps) => JSX.Element { return this.cachedData["IntInput"] ?? this.updateCache("IntInput") }
     public get editorItemTheme(): Theme | any { return this.cachedData["editorItemTheme"] ?? this.updateCache("editorItemTheme") }
     public get ColorPicker(): (props: ColorPickerProps) => JSX.Element { return this.cachedData["ColorPicker"] ?? this.updateCache("ColorPicker") }
+    public get Float2Input(): (props: Float2InputFieldProps) => JSX.Element { return this.cachedData["Float2InputField"] ?? this.updateCache("Float2InputField") }
+    public get Float3Input(): (props: Float3InputFieldProps) => JSX.Element { return this.cachedData["Float3InputField"] ?? this.updateCache("Float3InputField") }
+    public get Float4Input(): (props: Float4InputFieldProps) => JSX.Element { return this.cachedData["Float4InputField"] ?? this.updateCache("Float4InputField") }
+    public get Int2Input(): (props: Int2InputFieldProps) => JSX.Element { return this.cachedData["Int2InputField"] ?? this.updateCache("Int2InputField") }
+    public get Int3Input(): (props: Int3InputFieldProps) => JSX.Element { return this.cachedData["Int3InputField"] ?? this.updateCache("Int3InputField") }
+    public get Int4Input(): (props: Int4InputFieldProps) => JSX.Element { return this.cachedData["Int4InputField"] ?? this.updateCache("Int4InputField") }
 }

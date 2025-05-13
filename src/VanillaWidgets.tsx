@@ -56,7 +56,7 @@ export type PropsDropdownField<T> = {
     disabled?: boolean
 } & Omit<HTMLAttributes<any>, "onChange">
 
-type PropsEditorItemControl = { label?: string, children?: JSX.Element | JSX.Element[] | string, styleContent?: React.CSSProperties }
+type PropsEditorItemControl = { label?: string, children?: ReactNode, styleContent?: React.CSSProperties, className?: string }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
 type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
@@ -129,6 +129,25 @@ export type ItemPickerProps = {
     onToggleFavorite?: (index: number, newValue: boolean) => any,
 }
 
+export type CheckboxProps = {
+    showHint?: boolean,
+    checked: boolean,
+    disabled?: boolean,
+    onChange: (value: boolean) => any,
+    className?: string
+}
+
+export type IntInputStandaloneProps = {
+    className?: string,
+    min?: number,
+    max?: number,
+    value: number,
+    disabled?: boolean,
+    onChange?: (x: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any,
+}
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -147,6 +166,8 @@ const registryIndex = {
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
     ItemPicker: ["game-ui/editor/widgets/item-picker/item-picker.tsx", "ItemPicker"],
+    Checkbox: ["game-ui/common/input/toggle/checkbox/checkbox.tsx", "Checkbox"],
+    IntInputStandalone: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
 }
 
 
@@ -174,11 +195,13 @@ export class VanillaWidgets {
     public DropdownField<T>(): (props: PropsDropdownField<T>) => JSX.Element { return this.cachedData["DropdownField"] ?? this.updateCache("DropdownField") }
     public get FocusableEditorItem(): (props: PropsFocusableEditorItem) => JSX.Element { return this.cachedData["FocusableEditorItem"] ?? this.updateCache("FocusableEditorItem") }
     public get editorItemModule(): Theme | any { return this.cachedData["editorItemModule"] ?? this.updateCache("editorItemModule") }
-    public EditorItemRow = ({ label, children, styleContent }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
-        <div className={this.editorItemModule.row} style={label ? {} : styleContent}>
+    public EditorItemRow = ({ label, children, styleContent, className }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
+        <this.EditorItemRowNoFocus className={className} label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
+    </VanillaWidgets.instance.FocusableEditorItem>
+    public EditorItemRowNoFocus = ({ label, children, styleContent, className }: PropsEditorItemControl) =>
+        <div className={[this.editorItemModule.row, className].join(" ")} style={label ? {} : styleContent}>
             {label ? <><div className={this.editorItemModule.label}>{label}</div><div className={this.editorItemModule.control} style={styleContent}>{children}</div></> : children}
         </div>
-    </VanillaWidgets.instance.FocusableEditorItem>
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
@@ -189,5 +212,7 @@ export class VanillaWidgets {
     public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
 
     public get ItemPicker(): (props: ItemPickerProps) => JSX.Element { return this.cachedData["ItemPicker"] ?? this.updateCache("ItemPicker") }
+    public get Checkbox(): (props: CheckboxProps) => JSX.Element { return this.cachedData["Checkbox"] ?? this.updateCache("Checkbox") }
+    public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
 
 }
