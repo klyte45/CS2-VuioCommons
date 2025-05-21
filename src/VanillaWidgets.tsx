@@ -75,6 +75,11 @@ type PropsFloat2InputField = { label: string, value: { x: number, y: number }, d
 } | {
     onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
 })
+type PropsFloat3InputField = { label: string, value: { x: number, y: number, z: number }, disabled?: boolean, onChange: (s: { x: number, y: number, z: number }) => any } & ({
+    onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
+} | {
+    onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
+})
 
 export type HierarchyViewport = {
     displayName: LocElement,
@@ -161,6 +166,19 @@ export type FloatInputStandaloneProps = {
     onBlur?: () => any,
 }
 
+
+export type FloatInputStandaloneProps = {
+    className?: string,
+    min?: number,
+    max?: number,
+    fractionDigits?: number,
+    value: number,
+    disabled?: boolean,
+    onChange?: (x: number) => any,
+    onFocus?: () => any,
+    onBlur?: () => any,
+    style?: React.CSSProperties
+}
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -175,6 +193,7 @@ const registryIndex = {
     ToggleField: ["game-ui/editor/widgets/fields/toggle-field.tsx", "ToggleField"],
     FloatInputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "FloatInputField"],
     Float2InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float2InputField"],
+    Float3InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float3InputField"],
     IntInputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "IntInputField"],
     HierarchyMenu: ["game-ui/editor/widgets/hierarchy-menu/hierarchy-menu.tsx", "HierarchyMenu"],
     EditorScrollable: ["game-ui/editor/widgets/scrollable/scrollable.tsx", "EditorScrollable"],
@@ -221,6 +240,7 @@ export class VanillaWidgets {
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get FloatInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["FloatInputField"] ?? this.updateCache("FloatInputField") }
     public get Float2InputField(): (props: PropsFloat2InputField) => JSX.Element { return this.cachedData["Float2InputField"] ?? this.updateCache("Float2InputField") }
+    public get Float3InputField(): (props: PropsFloat3InputField) => JSX.Element { return this.cachedData["Float3InputField"] ?? this.updateCache("Float3InputField") }
     public get IntInputField(): (props: PropsFloatInputField) => JSX.Element { return this.cachedData["IntInputField"] ?? this.updateCache("IntInputField") }
     public get HierarchyMenu(): (props: PropsHierarchyMenu) => JSX.Element { return this.cachedData["HierarchyMenu"] ?? this.updateCache("HierarchyMenu") }
     public get EditorScrollable(): (props: PropsEditorScrollable) => JSX.Element { return this.cachedData["EditorScrollable"] ?? this.updateCache("EditorScrollable") }
@@ -228,6 +248,6 @@ export class VanillaWidgets {
     public get ItemPicker(): (props: ItemPickerProps) => JSX.Element { return this.cachedData["ItemPicker"] ?? this.updateCache("ItemPicker") }
     public get Checkbox(): (props: CheckboxProps) => JSX.Element { return this.cachedData["Checkbox"] ?? this.updateCache("Checkbox") }
     public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
-    public get FloatInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["FloatInputStandalone"] ?? this.updateCache("FloatInputStandalone") }
+    public get FloatInputStandalone(): (props: FloatInputStandaloneProps) => JSX.Element { return this.cachedData["FloatInputStandalone"] ?? this.updateCache("FloatInputStandalone") }
 
 }
