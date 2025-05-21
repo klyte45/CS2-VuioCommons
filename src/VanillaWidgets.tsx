@@ -153,19 +153,6 @@ export type IntInputStandaloneProps = {
     onFocus?: () => any,
     onBlur?: () => any,
 }
-export type FloatInputStandaloneProps = {
-    style?: React.CSSProperties
-    className?: string,
-    min?: number,
-    max?: number,
-    fractionDigits?: number,
-    value: number,
-    disabled?: boolean,
-    onChange?: (x: number) => any,
-    onFocus?: () => any,
-    onBlur?: () => any,
-}
-
 
 export type FloatInputStandaloneProps = {
     className?: string,
@@ -179,6 +166,7 @@ export type FloatInputStandaloneProps = {
     onBlur?: () => any,
     style?: React.CSSProperties
 }
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
