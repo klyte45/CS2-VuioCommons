@@ -3,6 +3,7 @@ import { DropdownItem, LocalizedString, LocElement, Theme, UniqueFocusKey } from
 import { getModule } from "cs2/modding";
 import { CSSProperties, HTMLAttributes, MutableRefObject, ReactNode } from "react";
 import { VanillaComponentResolver } from "./VanillaComponentResolver";
+import "./common.scss"
 
 export type UIColorRGBA = {
     r: number
