@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { VanillaComponentResolver } from "../VanillaComponentResolver";
+import { useState } from "react";
 
 type VectorSectionProps = {
     title: string;
@@ -22,91 +23,119 @@ type VectorSectionEditableProps = {
     title: string;
     valueGetterFormatted: () => string[];
     valueGetter: () => string[];
-    onValueChanged: (i: number, x: string) => any
+    onValueChanged: (i: number, x: string) => any;
+    extraContent?: React.ReactNode
 };
-export class VectorSectionEditable extends Component<VectorSectionEditableProps, { editingValue: string[], editingIdx: number }> {
+export function VectorSectionEditable({ title, valueGetterFormatted, valueGetter, onValueChanged, extraContent }: VectorSectionEditableProps) {
+    const [editingValue, setEditingValue] = useState<string[]>([]);
+    const [editingIdx, setEditingIdx] = useState<number>(-1);
 
+    const formattedVals = valueGetterFormatted();
+    const width = `${68 * 3 / (formattedVals?.length || 1)}rem`;
 
-    constructor(props: VectorSectionEditableProps) {
-        super(props)
-        this.state = {
-            editingValue: [],
-            editingIdx: -1
-        }
-    }
+    return (
+        <>
+            <VanillaComponentResolver.instance.Section title={title}>
+                {valueGetter()?.map((x, i) => {
+                    const onBlur = (target: any) => {
+                        onValueChanged(i, target.value);
+                        setEditingValue([]);
+                        setEditingIdx(-1);
+                    };
 
-    render() {
-        const formattedVals = this.props.valueGetterFormatted();
-        const width = `${68 * 3 / (formattedVals?.length || 1)}rem`;
-        return <>
-            <VanillaComponentResolver.instance.Section title={this.props.title}>
-                {this.props.valueGetter()?.map((x, i) => {
-                    const onBlur = (x: any) => { this.props.onValueChanged(i, x.value); this.setState({ editingValue: [], editingIdx: -1 }) };
-                    return <div key={i} style={{ position: "relative", width: width }} className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}>
-                        <div style={{
-                            opacity: this.state.editingIdx == i ? 0 : 1, pointerEvents: "none", display: "flex",
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0, width: width
-                        }} className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}>{formattedVals[i]}</div>
-                        <div style={{
-                            opacity: this.state.editingIdx == i ? 1 : 0,
-                            display: "flex",
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0, width: width
-                        }} className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField} onClick={() => {
-                            var editingValue = [];
-                            editingValue[i] = x;
-                            return this.setState({ editingIdx: i, editingValue });
-                        }}>
-                            {this.state.editingIdx == i && <input key={i}
-                                className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
+                    return (
+                        <div
+                            key={i}
+                            style={{ position: "relative", maxWidth: width, display: 'flex', flexGrow: 1, flexShrink: 1 }}
+                            className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
+                        >
+                            <div
                                 style={{
+                                    opacity: editingIdx === i ? 0 : 1,
+                                    pointerEvents: "none",
                                     display: "flex",
                                     position: "absolute",
                                     left: 0,
                                     right: 0,
                                     top: 0,
                                     bottom: 0,
-                                    border: "none",
-                                    background: "none",
-                                    color: "white",
-                                    textAlign: "center",
-                                    fontWeight: "normal",
-                                    paddingTop: "5rem", width: width
+                                    width: "100%",
                                 }}
-                                value={this.state.editingValue[i]}
-                                onChange={e => {
-                                    const newVal = this.state.editingValue;
-                                    newVal[i] = e.target.value;
-                                    this.setState({ editingValue: newVal });
+                                className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
+                            >
+                                {formattedVals[i]}
+                            </div>
+                            <div
+                                style={{
+                                    opacity: editingIdx === i ? 1 : 0,
+                                    display: "flex",
+                                    position: "absolute",
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    width: "100%",
                                 }}
-                                autoFocus={true}
-                                onFocus={(x) => x.target.selectionStart = x.target.value.length}
-                                onDoubleClick={(x) => {
-                                    x.currentTarget.selectionStart = 0;
-                                    x.currentTarget.selectionEnd = x.currentTarget.value.length;
+                                className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
+                                onClick={() => {
+                                    const newEditingValue = [];
+                                    newEditingValue[i] = x;
+                                    setEditingIdx(i);
+                                    setEditingValue(newEditingValue);
                                 }}
-                                onBlur={(x) => onBlur(x.target)}
-                                onKeyDownCapture={(x) => {
-                                    if (x.key === "Enter") {
-                                        onBlur(x.target);
-                                        x.stopPropagation()
-                                    } else if (x.key == "Escape") {
-                                        this.setState({ editingValue: [], editingIdx: -1 });
-                                        x.stopPropagation()
-                                    }
-                                }} />}
+                            >
+                                {editingIdx === i && (
+                                    <input
+                                        key={i}
+                                        className={VanillaComponentResolver.instance.mouseToolOptionsTheme.numberField}
+                                        style={{
+                                            display: "flex",
+                                            position: "absolute",
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0,
+                                            border: "none",
+                                            background: "none",
+                                            color: "white",
+                                            textAlign: "center",
+                                            fontWeight: "normal",
+                                            paddingTop: "5rem",
+                                            width: "100%",
+                                        }}
+                                        value={editingValue[i] ?? ""}
+                                        onChange={e => {
+                                            const newVal = [...editingValue];
+                                            newVal[i] = e.target.value;
+                                            setEditingValue(newVal);
+                                        }}
+                                        autoFocus={true}
+                                        onFocus={e => {
+                                            e.target.selectionStart = e.target.value.length;
+                                        }}
+                                        onDoubleClick={e => {
+                                            e.currentTarget.selectionStart = 0;
+                                            e.currentTarget.selectionEnd = e.currentTarget.value.length;
+                                        }}
+                                        onBlur={e => onBlur(e.target)}
+                                        onKeyDownCapture={e => {
+                                            if (e.key === "Enter") {
+                                                onBlur(e.target);
+                                                e.stopPropagation();
+                                            } else if (e.key === "Escape") {
+                                                setEditingValue([]);
+                                                setEditingIdx(-1);
+                                                e.stopPropagation();
+                                            }
+                                        }}
+                                    />
+                                )}
+                            </div>
                         </div>
-                    </div>;
+                    );
                 })}
-            </VanillaComponentResolver.instance.Section> 
-        </>;
-
-    }
+                {extraContent}
+            </VanillaComponentResolver.instance.Section>
+        </>
+    );
 }
