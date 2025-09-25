@@ -4,6 +4,7 @@ import { getModule } from "cs2/modding";
 import { CSSProperties, HTMLAttributes, MutableRefObject, ReactNode } from "react";
 import { VanillaComponentResolver } from "./VanillaComponentResolver";
 import "./common.scss"
+import { FocusDisabled } from "cs2/input";
 
 export type UIColorRGBA = {
     r: number
@@ -218,12 +219,14 @@ export class VanillaWidgets {
     public get FocusableEditorItem(): (props: PropsFocusableEditorItem) => JSX.Element { return this.cachedData["FocusableEditorItem"] ?? this.updateCache("FocusableEditorItem") }
     public get editorItemModule(): Theme | any { return this.cachedData["editorItemModule"] ?? this.updateCache("editorItemModule") }
     public EditorItemRow = ({ label, children, styleContent, className }: PropsEditorItemControl) => <VanillaWidgets.instance.FocusableEditorItem focusKey={VanillaComponentResolver.instance.FOCUS_DISABLED}>
-        <this.EditorItemRowNoFocus className={className} label={label} styleContent={styleContent}>{children}</this.EditorItemRowNoFocus>
-    </VanillaWidgets.instance.FocusableEditorItem>
-    public EditorItemRowNoFocus = ({ label, children, styleContent, className }: PropsEditorItemControl) =>
+
         <div className={[this.editorItemModule.row, className].join(" ")} style={label ? {} : styleContent}>
             {label ? <><div className={this.editorItemModule.label}>{label}</div><div className={this.editorItemModule.control} style={styleContent}>{children}</div></> : children}
         </div>
+
+    </VanillaWidgets.instance.FocusableEditorItem>
+    public EditorItemRowNoFocus = ({ label, children, styleContent, className }: PropsEditorItemControl) =>
+        <this.EditorItemRow className={className} label={label} styleContent={styleContent}><FocusDisabled>{children}</FocusDisabled></this.EditorItemRow>
     public get DirectoryPickerButton(): (props: PropsDirectoryPickerButton) => JSX.Element { return this.cachedData["DirectoryPickerButton"] ?? this.updateCache("DirectoryPickerButton") }
     public get StringInputField(): (props: PropsStringInputField) => JSX.Element { return this.cachedData["StringInputField"] ?? this.updateCache("StringInputField") }
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
