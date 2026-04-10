@@ -13,3 +13,9 @@ export function toEntityTyped(entity: E2): Entity {
         Version: entity.version
     }
 }
+export function toVanillaEntity(entity: Entity): E2 {
+    return {
+        index: entity.Index,
+        version: entity.Version
+    }
+}
