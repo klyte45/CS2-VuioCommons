@@ -206,6 +206,14 @@ type Int2InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number }>
 type Int3InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number }>
 type Int4InputFieldProps = BaseVectorInputFieldProps<{ x: number, y: number, z: number, w: number }>
 
+type InfoLinkProps = {
+    icon?: string;
+    tooltip?: string;
+    uppercase?: boolean;
+    onSelect?: () => void;
+    children?: React.ReactNode;
+};
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -257,8 +265,8 @@ const registryIndex = {
     Float4InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float4InputField"],
     Int2InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int2InputField"],
     Int3InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int3InputField"],
-    Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"]
-
+    Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"],
+    InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"]
 }
 
 
@@ -338,11 +346,12 @@ export class VanillaComponentResolver {
     public get Int2Input(): (props: Int2InputFieldProps) => JSX.Element { return this.cachedData["Int2InputField"] ?? this.updateCache("Int2InputField") }
     public get Int3Input(): (props: Int3InputFieldProps) => JSX.Element { return this.cachedData["Int3InputField"] ?? this.updateCache("Int3InputField") }
     public get Int4Input(): (props: Int4InputFieldProps) => JSX.Element { return this.cachedData["Int4InputField"] ?? this.updateCache("Int4InputField") }
+    public get InfoLink(): (props: InfoLinkProps) => JSX.Element { return this.cachedData["InfoLink"] ?? this.updateCache("InfoLink") }
 
 
-    static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean }[], tooltip?: React.ReactNode) {
+    static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
         return <VanillaComponentResolver.instance.InfoSection disableFocus={true} tooltip={tooltip}>
-            {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} />)}
+            {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} icon={x.icon} />)}
         </VanillaComponentResolver.instance.InfoSection>;
     }
 }

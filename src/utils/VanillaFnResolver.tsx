@@ -63,6 +63,11 @@ const registryIndex = {
         fn: {
             useCachedLocalization: null as unknown as typeof useCachedLocalization
         }
+    },
+    time: {
+        tsx: "game-ui/common/charts/simulation-time-scale.ts", fn: {
+
+        }
     }
 }
 
@@ -105,6 +110,7 @@ export class VanillaFnResolver {
         return Object.fromEntries(Object.keys(registryIndex.color.fn).map(x => [x, this.getOrUpdateCache("color", x)])) as RegistryType['color']['fn']
     }
 }
+
 
 
 
