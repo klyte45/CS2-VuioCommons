@@ -170,6 +170,25 @@ type ColorPickerProps = {
     allowFocusExit?: boolean
 }
 
+type PropsColorField = {
+    disabled?: boolean,
+    focusKey?: UniqueFocusKey | null
+    value: Color01,
+    className?: string,
+    selectAction?: string,
+    alpha?: boolean,
+    popupDirection?: "down" | "up" | "left" | "right",
+    hideHint?: boolean,
+    colorWheel?: boolean,
+    hexInput?: boolean,
+    onChange?: (x: Color01) => any,
+    onClick?: () => any,
+    onMouseEnter?: () => any,
+    onMouseLeave?: () => any,
+    onOpenPicker?: () => any,
+    onClosePicker?: () => any
+}
+
 
 type BaseVectorInputFieldProps<T> = {
     label: string,
@@ -232,6 +251,7 @@ const registryIndex = {
     IntInput: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
     editorItemTheme: ["game-ui/editor/widgets/item/editor-item.module.scss", "classes"],
     ColorPicker: ["game-ui/common/input/color-picker/color-picker/color-picker.tsx", "ColorPicker"],
+    ColorField: ["game-ui/common/input/color-picker/color-field/color-field.tsx", "ColorField"],
     Float2InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float2InputField"],
     Float3InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float3InputField"],
     Float4InputField: ["game-ui/editor/widgets/fields/float-input-field.tsx", "Float4InputField"],
@@ -269,6 +289,7 @@ export class VanillaComponentResolver {
     public get IconButton(): (props: IconButtonProps) => JSX.Element { return this.cachedData["IconButton"] ?? this.updateCache("IconButton") }
     public get Tooltip(): (props: PropsTooltip) => JSX.Element { return this.cachedData["Tooltip"] ?? this.updateCache("Tooltip") }
     public get EllipsisTextInput(): (props: PropsEllipsesTextInput) => JSX.Element { return this.cachedData["EllipsisTextInput"] ?? this.updateCache("EllipsisTextInput") }
+    public get ColorField(): (props: PropsColorField) => JSX.Element { return this.cachedData["ColorField"] ?? this.updateCache("ColorField") }
 
 
     public get themeToggleLine(): Theme | any { return this.cachedData["themeToggleLine"] ?? this.updateCache("themeToggleLine") }
@@ -317,4 +338,11 @@ export class VanillaComponentResolver {
     public get Int2Input(): (props: Int2InputFieldProps) => JSX.Element { return this.cachedData["Int2InputField"] ?? this.updateCache("Int2InputField") }
     public get Int3Input(): (props: Int3InputFieldProps) => JSX.Element { return this.cachedData["Int3InputField"] ?? this.updateCache("Int3InputField") }
     public get Int4Input(): (props: Int4InputFieldProps) => JSX.Element { return this.cachedData["Int4InputField"] ?? this.updateCache("Int4InputField") }
+
+
+    static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean }[], tooltip?: React.ReactNode) {
+        return <VanillaComponentResolver.instance.InfoSection disableFocus={true} tooltip={tooltip}>
+            {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} />)}
+        </VanillaComponentResolver.instance.InfoSection>;
+    }
 }
