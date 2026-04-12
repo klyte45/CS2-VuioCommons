@@ -1,7 +1,7 @@
 
 import { DropdownItem, LocalizedString, LocElement, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
-import { CSSProperties, HTMLAttributes, MutableRefObject, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes, MutableRefObject, ReactNode, useState } from "react";
 import { VanillaComponentResolver } from "./VanillaComponentResolver";
 import "./common.scss"
 import { FocusDisabled } from "cs2/input";
@@ -242,4 +242,14 @@ export class VanillaWidgets {
     public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
     public get FloatInputStandalone(): (props: FloatInputStandaloneProps) => JSX.Element { return this.cachedData["FloatInputStandalone"] ?? this.updateCache("FloatInputStandalone") }
 
+    public get StringInputRow() {
+        return ({ label, value, disabled, onChange, className, maxLength, styleContent }: Omit<PropsStringInputField & PropsEditorItemControl, "children" | "multiline" | "onChangeStart" | "onChangeEnd">) => {
+            const [typingValue, setTypingValue] = useState(value);
+            return <this.EditorItemRow label={label} className={className} styleContent={styleContent}>
+                <this.StringInputField value={typingValue} disabled={disabled} onChange={setTypingValue} onChangeStart={() => setTypingValue(value)} onChangeEnd={() => {
+                    onChange(typingValue);
+                }} maxLength={maxLength} />
+            </this.EditorItemRow>
+        }
+    }
 }

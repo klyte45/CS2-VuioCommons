@@ -214,6 +214,21 @@ type InfoLinkProps = {
     children?: React.ReactNode;
 };
 
+type ActionButtonTheme = {
+    actionsSection: string,
+    button: string,
+    toggle: string,
+    off: string,
+    outOfService: string,
+    label: string,
+    hint: string,
+    hintIcon: string,
+    tooltipLegends: string,
+    tooltipLegend: string,
+    lock: string,
+}
+
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -266,7 +281,7 @@ const registryIndex = {
     Int2InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int2InputField"],
     Int3InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int3InputField"],
     Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"],
-    InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"]
+    InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"],
 }
 
 
@@ -318,9 +333,9 @@ export class VanillaComponentResolver {
     public get assetGridTheme(): Theme | any { return this.cachedData["assetGridTheme"] ?? this.updateCache("assetGridTheme") }
     public get ellipsisInput(): Theme | any { return this.cachedData["ellipsisInput"] ?? this.updateCache("ellipsisInput") }
     public get ellipsisInputAlt(): Theme | any { return this.cachedData["ellipsisInputAlt"] ?? this.updateCache("ellipsisInputAlt") }
-    public get actionsSectionTheme(): Theme | any { return this.cachedData["actionsSectionTheme"] ?? this.updateCache("actionsSectionTheme") }
+    public get actionsSectionTheme(): ActionButtonTheme { return this.cachedData["actionsSectionTheme"] ?? this.updateCache("actionsSectionTheme") }
     public get DescriptionTooltip(): (props: PropsDescriptionTooltip) => JSX.Element { return this.cachedData["DescriptionTooltip"] ?? this.updateCache("DescriptionTooltip") }
-    public get actionButtonTheme(): Theme | any { return this.cachedData["actionButtonTheme"] ?? this.updateCache("actionButtonTheme") }
+    public get actionButtonTheme(): { button: string, icon: string } { return this.cachedData["actionButtonTheme"] ?? this.updateCache("actionButtonTheme") }
     public get CommonButton(): (props: ButtonProps) => JSX.Element { return this.cachedData["CommonButton"] ?? this.updateCache("CommonButton") }
     public get Dialog(): (props: DialogProps) => JSX.Element { return this.cachedData["Dialog"] ?? this.updateCache("Dialog") }
 
@@ -354,4 +369,21 @@ export class VanillaComponentResolver {
             {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} icon={x.icon} />)}
         </VanillaComponentResolver.instance.InfoSection>;
     }
+
+    public get ActionSectionButton(): (props: ActionSectionButtonProps) => JSX.Element {
+        return (props) => {
+            return <this.Tooltip tooltip={props.tooltip}>
+                <button className={this.actionButtonTheme.button + " " + this.actionsSectionTheme.button} disabled={props.disabled} onClick={props.onClick}>
+                    <img className={this.actionButtonTheme.icon} src={props.src} />
+                </button>
+            </this.Tooltip>
+        }
+    }
+}
+
+type ActionSectionButtonProps = {
+    src: string,
+    tooltip?: string,
+    disabled?: boolean,
+    onClick?: () => any
 }
