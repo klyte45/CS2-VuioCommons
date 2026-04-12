@@ -228,6 +228,32 @@ type ActionButtonTheme = {
     lock: string,
 }
 
+type TimeControlsTheme = {
+    timeControls: string
+    period: string
+    timeControlsNew: string
+    filler: string
+    button: string
+    paused: string
+    secondaryActive: string
+    playPause: string
+    playPauseNew: string
+    speed: string
+    speedNew: string
+    dateTimeContainer: string
+    dateTimeContainerNew: string
+    dateTime: string
+    alternate2: string
+    disablePauseAnimation: string
+    pausedLabel: string
+    timeHours: string
+    timeColon: string
+    timeMinutes: string
+    timePeriod: string
+    dateContainer: string
+    date: string
+    alternate1: string
+}
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -282,7 +308,9 @@ const registryIndex = {
     Int3InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int3InputField"],
     Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"],
     InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"],
+  timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
 }
+
 
 
 
@@ -362,6 +390,7 @@ export class VanillaComponentResolver {
     public get Int3Input(): (props: Int3InputFieldProps) => JSX.Element { return this.cachedData["Int3InputField"] ?? this.updateCache("Int3InputField") }
     public get Int4Input(): (props: Int4InputFieldProps) => JSX.Element { return this.cachedData["Int4InputField"] ?? this.updateCache("Int4InputField") }
     public get InfoLink(): (props: InfoLinkProps) => JSX.Element { return this.cachedData["InfoLink"] ?? this.updateCache("InfoLink") }
+    public get timeControlsTheme(): TimeControlsTheme { return this.cachedData["timeControlsTheme"] ?? this.updateCache("timeControlsTheme") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
