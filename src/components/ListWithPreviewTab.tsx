@@ -1,5 +1,5 @@
 import { PropsToolButton } from "../VanillaComponentResolver";
-import { ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 import "./ListWithPreviewTab.scss";
 import { ContextMenuButtonProps } from "./ContextMenuButton";
 import { ListWithContentTab } from "./ListWithContentTab";
@@ -24,7 +24,8 @@ type Props = {
     selectedKey: string | null,
     emptyListMsg?: ReactNode,
     noneSelectedMsg?: ReactNode,
-    className?: string
+    className?: string,
+    previewRef?: Ref<HTMLDivElement>
 }
 
 /**
@@ -57,11 +58,11 @@ type Props = {
  *   <FontPreview fontName={selectedFont} />
  * </ListWithPreviewTab>
  */
-export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, itemActions, onChangeSelection, selectedKey, children, emptyListMsg, noneSelectedMsg, className }: Props) => {
+export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, itemActions, onChangeSelection, selectedKey, children, emptyListMsg, noneSelectedMsg, className, previewRef }: Props) => {
 
     return <ListWithContentTab listItems={listItems} listActions={listActions} onChangeSelection={onChangeSelection} selectedKey={selectedKey} emptyListMsg={emptyListMsg} className={className}>
         {selectedKey ? <>
-            <div className="k45_tabWithPreview_preview">
+            <div className="k45_tabWithPreview_preview" ref={previewRef}>
                 {children}
             </div>
             <div className="k45_tabWithPreview_details">
