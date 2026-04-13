@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { ContextMenuButton } from "./ContextMenuButton";
 import { ReactNode } from "react";
 import { ListActionTypeArray } from "./ListWithPreviewTab";
+import { FocusDisabled } from "cs2/input";
 
 type Props = {
     listItems: (string | { section?: string, emptyPlaceholder?: string, displayName?: undefined } | { displayName: string, value: string })[],
@@ -12,7 +13,8 @@ type Props = {
     onChangeSelection: (x: string) => any,
     selectedKey: string | null,
     emptyListMsg?: ReactNode,
-    bodyClasses?: string
+    bodyClasses?: string,
+    className?: string
 }
 
 
@@ -38,19 +40,21 @@ type Props = {
  *   <FontPreview fontName={selectedFont} />
  * </ListWithContentTab>
  */
-export const ListWithContentTab = ({ listItems, listActions, onChangeSelection, selectedKey, children, emptyListMsg, bodyClasses }: Props) => {
+export const ListWithContentTab = ({ listItems, listActions, onChangeSelection, selectedKey, children, emptyListMsg, bodyClasses, className }: Props) => {
 
     const Button = VanillaComponentResolver.instance.ToolButton;
 
-    return <div className="k45_tabWithContent_content">
+    return <div className={classNames("k45_tabWithContent_content", className)}>
         <div className="k45_tabWithPreview_list">
-            {!!listActions?.length && <div className="k45_tabWithPreview_listActions">
-                {listActions?.map(x =>
-                    x == null ? <div style={{ flexGrow: 1 }} />
-                        : x.isContext ? <ContextMenuButton {...x} />
-                            : <Button {...x} />
-                )}
-            </div>}
+            {!!listActions?.length && <FocusDisabled>
+                <div className="k45_tabWithPreview_listActions">
+                    {listActions?.map(x =>
+                        x == null ? <div style={{ flexGrow: 1 }} />
+                            : x.isContext ? <ContextMenuButton {...x} />
+                                : <Button {...x} />
+                    )}
+                </div>
+            </FocusDisabled>}
             {listItems.length ? <VanillaWidgets.instance.EditorScrollable className="k45_tabWithPreview_listContent">
                 {listItems.map(x => {
                     if (typeof x == "string") {

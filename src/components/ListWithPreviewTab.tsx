@@ -16,13 +16,15 @@ type Props = {
     itemActions: ({
         className: string,
         action: () => any,
-        text: string
+        text: string,
+        disabled?: boolean
     } | null)[]
     children: ReactNode,
     onChangeSelection: (x: string) => any,
     selectedKey: string | null,
     emptyListMsg?: ReactNode,
     noneSelectedMsg?: ReactNode,
+    className?: string
 }
 
 /**
@@ -55,9 +57,9 @@ type Props = {
  *   <FontPreview fontName={selectedFont} />
  * </ListWithPreviewTab>
  */
-export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, itemActions, onChangeSelection, selectedKey, children, emptyListMsg, noneSelectedMsg }: Props) => {
+export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, itemActions, onChangeSelection, selectedKey, children, emptyListMsg, noneSelectedMsg, className }: Props) => {
 
-    return <ListWithContentTab listItems={listItems} listActions={listActions} onChangeSelection={onChangeSelection} selectedKey={selectedKey} emptyListMsg={emptyListMsg} >
+    return <ListWithContentTab listItems={listItems} listActions={listActions} onChangeSelection={onChangeSelection} selectedKey={selectedKey} emptyListMsg={emptyListMsg} className={className}>
         {selectedKey ? <>
             <div className="k45_tabWithPreview_preview">
                 {children}
@@ -73,7 +75,7 @@ export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, item
             </div>
             <div className="k45_tabWithPreview_actions">
                 {selectedKey &&
-                    itemActions.map(x => x == null ? <div style={{ flexGrow: 1 }} /> : <button className={x.className} onClick={x.action}>{x.text}</button>)
+                    itemActions.map(x => x == null ? <div style={{ flexGrow: 1 }} /> : <button className={x.className} onClick={x.action} disabled={x.disabled}>{x.text}</button>)
                 }
             </div>
         </> : <div className="k45_tabWithPreview_noneSelectedMsg">{noneSelectedMsg ?? "No item selected"}</div>}
