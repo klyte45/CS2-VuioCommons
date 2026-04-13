@@ -25,6 +25,36 @@ type Props = {
     noneSelectedMsg?: ReactNode,
 }
 
+/**
+ * Extends `ListWithContentTab` with a structured right-hand panel composed of three zones:
+ * a preview area (children), a key–value details grid, and a row of action buttons at the bottom.
+ * When nothing is selected, a placeholder message fills the content area.
+ *
+ * Used for resource management tabs (fonts, atlases, city layouts, prefab templates) where clicking
+ * a list entry shows its preview along with metadata and contextual actions.
+ *
+ * @example
+ * <ListWithPreviewTab
+ *   listItems={fontNames}
+ *   selectedKey={selectedFont}
+ *   onChangeSelection={setSelectedFont}
+ *   detailsFields={[
+ *     { key: "GUID",   value: fontDetail?.guid },
+ *     { key: "Source", value: fontDetail?.source },
+ *   ]}
+ *   itemActions={[
+ *     { className: "negativeBtn", text: "Delete", action: onDelete },
+ *     { className: "positiveBtn", text: "Rename", action: onRename },
+ *   ]}
+ *   listActions={[
+ *     { isContext: false, src: addIcon, onSelect: openAddDialog, focusKey: FocusDisabled, className: btnClass }
+ *   ]}
+ *   emptyListMsg="No fonts installed"
+ *   noneSelectedMsg="Select a font to preview it"
+ * >
+ *   <FontPreview fontName={selectedFont} />
+ * </ListWithPreviewTab>
+ */
 export const ListWithPreviewTab = ({ listItems, detailsFields, listActions, itemActions, onChangeSelection, selectedKey, children, emptyListMsg, noneSelectedMsg }: Props) => {
 
     return <ListWithContentTab listItems={listItems} listActions={listActions} onChangeSelection={onChangeSelection} selectedKey={selectedKey} emptyListMsg={emptyListMsg} >

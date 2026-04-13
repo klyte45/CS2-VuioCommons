@@ -7,6 +7,19 @@ type VectorSectionProps = {
     valueGetter: () => string[];
 };
 
+/**
+ * Displays a read-only list of string values (e.g. vector components) as number fields
+ * inside a vanilla `Section` row.
+ *
+ * Used to show multi-component values (position, rotation, scale) in the tool options panel
+ * when editing is not required.
+ *
+ * @example
+ * <VectorSection
+ *   title="Scale"
+ *   valueGetter={() => [scaleX.toFixed(3), scaleY.toFixed(3), scaleZ.toFixed(3)]}
+ * />
+ */
 export class VectorSection extends Component<VectorSectionProps> {
 
     render() {
@@ -26,6 +39,21 @@ type VectorSectionEditableProps = {
     onValueChanged: (i: number, x: string) => any;
     extraContent?: React.ReactNode
 };
+/**
+ * An editable version of `VectorSection` where each component can be clicked to reveal an inline
+ * text input. Clicking outside or pressing Enter commits the value; Escape cancels editing.
+ * Displays a formatted (display) value when not in edit mode, and the raw value in the input.
+ *
+ * Used in the tool options panel to edit 3D vectors (position, rotation) component by component.
+ *
+ * @example
+ * <VectorSectionEditable
+ *   title="Position"
+ *   valueGetter={() => [posX, posY, posZ].map(String)}
+ *   valueGetterFormatted={() => [posX, posY, posZ].map(v => v.toFixed(3))}
+ *   onValueChanged={(i, val) => updateComponent(i, parseFloat(val))}
+ * />
+ */
 export function VectorSectionEditable({ title, valueGetterFormatted, valueGetter, onValueChanged, extraContent }: VectorSectionEditableProps) {
     const [editingValue, setEditingValue] = useState<string[]>([]);
     const [editingIdx, setEditingIdx] = useState<number>(-1);

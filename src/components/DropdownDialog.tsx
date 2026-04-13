@@ -13,6 +13,26 @@ type DropwdownDialogProps<T> = {
     translate: (key: string, fallback?: string) => string,
 } & Omit<PropsDropdownField<T>, 'style' | 'onChange' | 'translate'>
 
+/**
+ * A Portal-wrapped modal dialog containing a vanilla `DropdownField`. The user selects a value from
+ * the dropdown and confirms it. On confirm the selected value is passed to `callback`; on dismiss it
+ * is called without arguments. All other props are forwarded to `DropdownField` (except `style`,
+ * `onChange`, and `translate` which are controlled internally).
+ *
+ * The confirm button label uses the translation key `"loadBtn"`; cancel uses `"cancelBtn"`.
+ *
+ * @example
+ * <DropdownDialog<string>
+ *   isActive={isSelectingTemplate}
+ *   setIsActive={setIsSelectingTemplate}
+ *   title="Load city template"
+ *   promptText="Select a template to load:"
+ *   items={templateNames.map(t => ({ value: t, displayName: { value: t } }))}
+ *   value={undefined}
+ *   translate={translate}
+ *   callback={(selected) => selected && loadTemplate(selected)}
+ * />
+ */
 export const DropdownDialog = <T,>(props: DropwdownDialogProps<T>) => {
     const { callback, title, promptText, value: initialValue, setIsActive, isActive, translate, ...restProps } = props;
     const Dialog = VanillaComponentResolver.instance.Dialog;

@@ -16,6 +16,28 @@ type Props = {
 }
 
 
+/**
+ * A two-panel layout: a fixed-width scrollable list on the left, and an arbitrary content area on
+ * the right. The list supports section headers, empty-placeholder rows, or selectable items.
+ * Optional action buttons (plain `ToolButton` or `ContextMenuButton`) are shown above the list.
+ *
+ * `selectedKey` drives the highlighted state of list items. Selecting an item calls
+ * `onChangeSelection` with its value string.
+ *
+ * This is the building block used by `ListWithPreviewTab`.
+ *
+ * @example
+ * <ListWithContentTab
+ *   listItems={fontNames.map(n => ({ displayName: n, value: n }))}
+ *   selectedKey={selectedFont}
+ *   onChangeSelection={setSelectedFont}
+ *   listActions={[
+ *     { isContext: false, src: addIcon, onSelect: openAddDialog, focusKey: FocusDisabled, className: btnClass }
+ *   ]}
+ * >
+ *   <FontPreview fontName={selectedFont} />
+ * </ListWithContentTab>
+ */
 export const ListWithContentTab = ({ listItems, listActions, onChangeSelection, selectedKey, children, emptyListMsg, bodyClasses }: Props) => {
 
     const Button = VanillaComponentResolver.instance.ToolButton;

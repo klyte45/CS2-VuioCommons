@@ -19,6 +19,34 @@ type PropsHierarchyMenu = {
     onSetExpanded?: (viewportIndex: number, expanded: boolean) => any;
     currentTreeOnlyMode?: boolean
 };
+/**
+ * Renders a tree-structured hierarchy as a flat list of indented rows. Each row can have an icon,
+ * a title, expand/collapse toggle, and selection state. Indentation is driven by `level`.
+ *
+ * In `currentTreeOnlyMode` only the subtree containing the currently selected node is rendered,
+ * automatically collapsing unrelated branches — useful for keeping the viewport compact when the
+ * full tree is large.
+ *
+ * `onSelect` receives the flat-viewport index and the new selection state.
+ * `onSetExpanded` receives the flat-viewport index and the new expanded state.
+ *
+ * Used in the WE text hierarchy panel to display and navigate the tree of text items attached
+ * to an entity.
+ *
+ * @example
+ * <K45HierarchyMenu
+ *   viewport={[
+ *     { displayName: "Root",  icon: nodeIcon, level: 0, selectable: true, expandable: true, expanded: true },
+ *     { displayName: "Child", icon: nodeIcon, level: 1, selectable: true, selected: true },
+ *   ]}
+ *   onSelect={(idx, selected) => setCurrentItem(viewport[idx].id)}
+ *   onSetExpanded={(idx, expanded) =>
+ *     expanded
+ *       ? setExpanded(prev => [...prev, viewport[idx].id])
+ *       : setExpanded(prev => prev.filter(id => id !== viewport[idx].id))
+ *   }
+ * />
+ */
 export const K45HierarchyMenu = ({ viewport, onSelect, onSetExpanded, currentTreeOnlyMode }: PropsHierarchyMenu) => {
     const targetViewport = [] as { idx: number, item: K45HierarchyViewport }[]
     let startIdx = 0;

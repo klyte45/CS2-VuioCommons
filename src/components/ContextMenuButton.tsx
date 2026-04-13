@@ -24,6 +24,30 @@ export type ContextMenuButtonProps = {
     menuDirection?: ContextMenuExpansion,
     maxHeight?: number
 } & Omit<PropsToolButton, "onClick" | "onSelect" | "selected">
+/**
+ * A vanilla `ToolButton` that opens a floating context menu (rendered via a Portal) when clicked.
+ * The menu can contain labelled action items, disabled items, or separator nulls. Automatically
+ * repositions itself to stay within the screen (bottom-right, bottom-left, top-right, or top-left)
+ * unless a direction is forced via `menuDirection`. Closes on outside click.
+ *
+ * Used throughout the hierarchy view toolbar to group related actions (add node, export, import, paste)
+ * behind a single button, preventing toolbar clutter.
+ *
+ * @example
+ * <ContextMenuButton
+ *   src=\"coui://uil/Standard/Plus.svg\"
+ *   tooltip=\"Add item\"
+ *   focusKey={FocusDisabled}
+ *   className={toolButtonTheme.button}
+ *   menuTitle=\"Add\"
+ *   menuItems={[
+ *     { label: \"Add root\",    action: () => addRoot() },
+ *     { label: \"Add child\",   action: () => addChild(), disabled: !hasSelection },
+ *     null,
+ *     { label: \"Add sibling\", action: () => addSibling() },
+ *   ]}
+ * />
+ */
 export const ContextMenuButton = (props: ContextMenuButtonProps) => {
     const btnRef = useRef(null as any as HTMLDivElement);
     const menuRef = useRef(null as any as HTMLDivElement);

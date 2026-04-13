@@ -25,6 +25,30 @@ type FilePickerDialogProps = {
     generateDataProvider(folder: string, allowedExtension: string): Promise<DataProvider>
 }
 
+/**
+ * A Portal-wrapped modal file-browser dialog. Shows the contents of a directory fetched via
+ * `generateDataProvider`, lets the user navigate folders, click a file to select it, and confirm.
+ * Supports bookmarks (shortcuts to common directories) displayed as a context menu.
+ * The current folder path is shown in a clickable breadcrumb that turns into a text field for
+ * manual path entry.
+ *
+ * `allowedExtensions` is passed through to `generateDataProvider` (e.g. `"*.ttf"`).
+ *
+ * @example
+ * <FilePickerDialog
+ *   isActive={isPickingFile}
+ *   setIsActive={setIsPickingFile}
+ *   dialogTitle="Add font"
+ *   dialogPromptText="Select a .ttf font file:"
+ *   allowedExtensions="*.ttf"
+ *   initialFolder={fontsFolder}
+ *   generateDataProvider={FileService.generateDataProvider}
+ *   translate={translate}
+ *   bookmarksTitle="Mod folders"
+ *   bookmarks={modFolders.map(m => ({ name: m.ModName, targetPath: m.Location }))}
+ *   actionOnSuccess={(path) => path && installFont(path)}
+ * />
+ */
 export const FilePickerDialog = ({
     isActive, setIsActive, dialogTitle, dialogPromptText, allowedExtensions, actionOnSuccess, initialFolder, bookmarks, bookmarksTitle, bookmarksIcon, translate, generateDataProvider
 }: FilePickerDialogProps) => {

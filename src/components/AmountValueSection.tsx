@@ -25,6 +25,31 @@ type AmountValueSectionProps = {
         disabledFn?: () => boolean
     }[]
 };
+/**
+ * A numeric value control rendered inside a vanilla `Section` row, with decrement and increment buttons
+ * on each side of a display field. Supports optional extra action buttons and can be rendered without
+ * the section wrapper (sectionless mode).
+ *
+ * Used in the tool options panel to adjust numeric properties such as font size, spacing, and scale.
+ *
+ * @example
+ * // Adjusting a font size value inside its own section row:
+ * <AmountValueSection
+ *   title="Font Size"
+ *   valueGetter={() => fontSize + " px"}
+ *   down={{ tooltip: "Decrease", onSelect: () => setFontSize(v => v - 1) }}
+ *   up={{ tooltip: "Increase", onSelect: () => setFontSize(v => v + 1) }}
+ * />
+ *
+ * @example
+ * // Inline (sectionless), embedded inside another layout:
+ * <AmountValueSection
+ *   sectionless
+ *   valueGetter={() => String(value)}
+ *   down={{ onSelect: () => decrement() }}
+ *   up={{ onSelect: () => increment() }}
+ * />
+ */
 export class AmountValueSection extends Component<AmountValueSectionProps> {
 
     render() {
