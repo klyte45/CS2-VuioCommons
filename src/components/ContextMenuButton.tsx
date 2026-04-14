@@ -103,14 +103,14 @@ export function onRecalculateContextMenuPosition(btnRef: MutableRefObject<HTMLDi
     const effectiveMenuDirection = menuDirection ?? findBetterDirectionContextMenu(btnRef, menuPosition);
     switch (effectiveMenuDirection) {
         case ContextMenuExpansion.BOTTOM_LEFT:
-            return ({ top: menuPosition.top + btnRef.current?.offsetHeight + 3, right: window.innerWidth - menuPosition.left - btnRef.current?.offsetWidth, borderTopLeftRadius: 0 } as CSSProperties);
+            return ({ top: menuPosition.top + btnRef.current?.offsetHeight + 3, right: window.innerWidth - menuPosition.left - btnRef.current?.offsetWidth, borderTopRightRadius: 0 } as CSSProperties);
         case ContextMenuExpansion.TOP_RIGHT:
             return ({ bottom: window.innerHeight - menuPosition.top + 3, left: menuPosition.left, borderBottomLeftRadius: 0 } as CSSProperties);
         case ContextMenuExpansion.TOP_LEFT:
             return ({ bottom: window.innerHeight - menuPosition.top + 3, right: window.innerWidth - menuPosition.left - btnRef.current?.offsetWidth, borderBottomRightRadius: 0 } as CSSProperties);
         case ContextMenuExpansion.BOTTOM_RIGHT:
         default:
-            return ({ top: menuPosition.top + btnRef.current?.offsetHeight + 3, left: menuPosition.left, borderTopRightRadius: 0 } as CSSProperties);
+            return ({ top: menuPosition.top + btnRef.current?.offsetHeight + 3, left: menuPosition.left, borderTopLeftRadius: 0 } as CSSProperties);
     }
 }
 
