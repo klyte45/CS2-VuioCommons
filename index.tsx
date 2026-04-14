@@ -22,3 +22,5 @@ export * from './src/utils/EnumValueType'
 export * from './src/utils/durationToGameMinutes'
 
 export * from './src/styles/buttonsStyles.scss'
+
+export * from './src/services/BaseFileService'

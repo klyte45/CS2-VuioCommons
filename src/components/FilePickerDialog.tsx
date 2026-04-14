@@ -79,8 +79,8 @@ type BaseFilePickerDialogProps = {
 }
 const BaseFilePickerDialog = ({ onConfirm: callback, dialogTitle: title, dialogPromptText: promptText,
     allowedExtensions, initialFolder, bookmarks, bookmarksTitle, bookmarksIcon, translate, generateDataProvider }: BaseFilePickerDialogProps) => {
-    const T_parentFolder = "Parent folder"
-    const T_initialFolder = "Initial folder"
+    const T_parentFolder = translate("picker.parentFolder", "Parent folder");
+    const T_initialFolder = translate("picker.initialFolder", "Initial folder");
     const i_dirIcon = "coui://uil/Standard/Folder.svg";
     const i_fileIcon = "coui://uil/Standard/PaperWithArrow.svg";
     const i_parentDirIcon = "coui://uil/Standard/ArrowUp.svg";
