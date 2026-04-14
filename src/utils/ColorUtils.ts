@@ -233,7 +233,7 @@ export class ColorUtils {
 
     static toRGBHex(color: Color01) {
         const { r, g, b, a } = color;
-        return `#${((1 << 24) + (Math.round(r * 255) << 16) + (Math.round(g * 255) << 8) + Math.round(b * 255)).toString(16).slice(1)}`;
+        return `#${((1 << 24) + (Math.round(r * 255) << 16) + (Math.round(g * 255) << 8) + Math.round(b * 255)).toString(16).slice(1)}` as `#${string}`;
     }
 
 
