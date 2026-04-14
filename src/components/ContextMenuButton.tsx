@@ -62,25 +62,24 @@ export const ContextMenuButton = (props: ContextMenuButtonProps) => {
     const menuDirection = props.menuDirection;
 
     useEffect(() => {
-        setMenuCss(onRecalculateContextMenuPosition(btnRef, menuPosition, menuDirection));
-    }, [menuOpen])
-
-
-
-    const handleClickOutside = (event: MouseEvent) => {
-        if (!btnRef.current) return;
-        if (isOnArea(event, btnRef)) return;
-        if (!menuRef.current) return;
-        if (isOnArea(event, menuRef)) return;
-        setMenuOpen(false);
-    };
+        if (!menuOpen) return;
+        setMenuCss(onRecalculateContextMenuPosition(btnRef, calculateElementPosition(btnRef.current)));
+    }, [menuOpen]);
 
     useEffect(() => {
+        if (!menuOpen) return;
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!btnRef.current) return;
+            if (isOnArea(event, btnRef)) return;
+            if (!menuRef.current) return;
+            if (isOnArea(event, menuRef)) return;
+            setMenuOpen(false);
+        };
         document.addEventListener('mousedown', handleClickOutside, true);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside, true);
         };
-    }, []);
+    }, [menuOpen]);
 
 
     return <>
