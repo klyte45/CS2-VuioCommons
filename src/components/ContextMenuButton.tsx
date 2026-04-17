@@ -35,16 +35,16 @@ export type ContextMenuButtonProps = {
  *
  * @example
  * <ContextMenuButton
- *   src=\"coui://uil/Standard/Plus.svg\"
- *   tooltip=\"Add item\"
+ *   src="coui://uil/Standard/Plus.svg"
+ *   tooltip="Add item"
  *   focusKey={FocusDisabled}
  *   className={toolButtonTheme.button}
- *   menuTitle=\"Add\"
+ *   menuTitle="Add"
  *   menuItems={[
- *     { label: \"Add root\",    action: () => addRoot() },
- *     { label: \"Add child\",   action: () => addChild(), disabled: !hasSelection },
+ *     { label: "Add root",    action: () => addRoot() },
+ *     { label: "Add child",   action: () => addChild(), disabled: !hasSelection },
  *     null,
- *     { label: \"Add sibling\", action: () => addSibling() },
+ *     { label: "Add sibling", action: () => addSibling() },
  *   ]}
  * />
  */
