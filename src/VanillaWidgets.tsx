@@ -169,6 +169,15 @@ export type FloatInputStandaloneProps = {
     style?: React.CSSProperties
 }
 
+export type PropsPopupSearchField = {
+    value: string,
+    valueIsFavorite?: boolean,
+    suggestions: { value: string, favorite: boolean }[],
+    uiTag?: string,
+    onChange: (v: string) => void,
+    onChangeFavorite?: (value: string, isFavorite: boolean) => void,
+}
+
 const registryIndex = {
     themeDropdown: ["game-ui/menu/widgets/dropdown-field/dropdown-field.module.scss", "classes"],
     inputField: ["game-ui/debug/widgets/fields/input-field/input-field.module.scss", "classes"],
@@ -191,6 +200,7 @@ const registryIndex = {
     Checkbox: ["game-ui/common/input/toggle/checkbox/checkbox.tsx", "Checkbox"],
     IntInputStandalone: ["game-ui/common/input/text/int-input.tsx", "IntInput"],
     FloatInputStandalone: ["game-ui/common/input/text/float-input.tsx", "FloatInput"],
+    PopupSearchField: ["game-ui/editor/widgets/search-field/popup-search-field.tsx", "PopupSearchField"],
 }
 
 
@@ -241,6 +251,7 @@ export class VanillaWidgets {
     public get Checkbox(): (props: CheckboxProps) => JSX.Element { return this.cachedData["Checkbox"] ?? this.updateCache("Checkbox") }
     public get IntInputStandalone(): (props: IntInputStandaloneProps) => JSX.Element { return this.cachedData["IntInputStandalone"] ?? this.updateCache("IntInputStandalone") }
     public get FloatInputStandalone(): (props: FloatInputStandaloneProps) => JSX.Element { return this.cachedData["FloatInputStandalone"] ?? this.updateCache("FloatInputStandalone") }
+    public get PopupSearchField(): (props: PropsPopupSearchField) => JSX.Element { return this.cachedData["PopupSearchField"] ?? this.updateCache("PopupSearchField") }
 
     public get StringInputRow() {
         return ({ label, value, disabled, onChange, className, maxLength, styleContent }: Omit<PropsStringInputField & PropsEditorItemControl, "children" | "multiline" | "onChangeStart" | "onChangeEnd">) => {
