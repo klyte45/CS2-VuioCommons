@@ -308,7 +308,7 @@ const registryIndex = {
     Int3InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int3InputField"],
     Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"],
     InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"],
-  timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
+    timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
 }
 
 

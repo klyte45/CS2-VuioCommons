@@ -1,7 +1,7 @@
 import engine from "cohtml/cohtml";
 import { ObjectTyped } from "object-typed";
 
-export class MultiUIValueBinding<T, U = T> {
+export class MultiUIValueReadOnlyBinding<T, U = T> {
 
     public get value(): U {
         return this.internalValue as U;
@@ -15,13 +15,9 @@ export class MultiUIValueBinding<T, U = T> {
         Promise.all(this.subscriptions.map(y => y(this.internalValue as U)));
     }
 
-    constructor(private propertyPrefix: string, private parseFn?: (input: T) => U, private deparseFn?: (input: U) => T) {
+    constructor(protected propertyPrefix: string, private parseFn?: (input: T) => U) {
         engine.off(this.propertyPrefix + "->");
         this.reactivate();
-    }
-
-    async set(newValue: U) {
-        engine.call(this.propertyPrefix + "!", this.deparseFn?.(newValue) ?? newValue);
     }
 
     dispose() {
@@ -47,6 +43,16 @@ type alpha = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | '
 type BindingClassObj = {
     _prefix: string,
     [key: `${alpha}${string}`]: new (...x: any[]) => any
+}
+
+export class MultiUIValueBinding<T, U = T> extends MultiUIValueReadOnlyBinding<T, U> {
+    constructor(propertyPrefix: string, parseFn?: (input: T) => U, private deparseFn?: (input: U) => T) {
+        super(propertyPrefix, parseFn);
+    }
+
+    async set(newValue: U) {
+        engine.call(this.propertyPrefix + "!", this.deparseFn?.(newValue) ?? newValue);
+    }
 }
 
 export class MultiUIValueBindingTools {
