@@ -254,6 +254,21 @@ type TimeControlsTheme = {
     date: string
     alternate1: string
 }
+type PanelTheme = {
+    closeIcon: string,
+    toggleIcon: string,
+    toggleIconExpanded: string,
+    panel: string,
+    header: string,
+    content: string,
+    footer: string,
+    titleBar: string,
+    title: string,
+    icon: string,
+    iconSpace: string,
+    closeButton: string,
+    toggle: string,
+}
 
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
@@ -309,6 +324,7 @@ const registryIndex = {
     Int4InputField: ["game-ui/editor/widgets/fields/int-input-field.tsx", "Int4InputField"],
     InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"],
     timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
+    panelTheme: ["game-ui/common/panel/panel.module.scss", "classes"],
 }
 
 
@@ -391,6 +407,7 @@ export class VanillaComponentResolver {
     public get Int4Input(): (props: Int4InputFieldProps) => JSX.Element { return this.cachedData["Int4InputField"] ?? this.updateCache("Int4InputField") }
     public get InfoLink(): (props: InfoLinkProps) => JSX.Element { return this.cachedData["InfoLink"] ?? this.updateCache("InfoLink") }
     public get timeControlsTheme(): TimeControlsTheme { return this.cachedData["timeControlsTheme"] ?? this.updateCache("timeControlsTheme") }
+    public get panelTheme(): PanelTheme { return this.cachedData["panelTheme"] ?? this.updateCache("panelTheme") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
