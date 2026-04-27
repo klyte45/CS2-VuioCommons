@@ -270,6 +270,13 @@ type PanelTheme = {
     toggle: string,
 }
 
+type PanelBackdropProps = {
+    className?: string,
+    children: React.ReactNode,
+    zIndex?: number,
+    onMouseDown?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+}
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -325,6 +332,7 @@ const registryIndex = {
     InfoLink: ["game-ui/game/components/selected-info-panel/shared-components/info-link/info-link.tsx", "InfoLink"],
     timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
     panelTheme: ["game-ui/common/panel/panel.module.scss", "classes"],
+    PanelBackdrop: ["game-ui/common/panel/panel-backdrop.tsx", "PanelBackdrop"],
 }
 
 
@@ -408,6 +416,7 @@ export class VanillaComponentResolver {
     public get InfoLink(): (props: InfoLinkProps) => JSX.Element { return this.cachedData["InfoLink"] ?? this.updateCache("InfoLink") }
     public get timeControlsTheme(): TimeControlsTheme { return this.cachedData["timeControlsTheme"] ?? this.updateCache("timeControlsTheme") }
     public get panelTheme(): PanelTheme { return this.cachedData["panelTheme"] ?? this.updateCache("panelTheme") }
+    public get PanelBackdrop(): (props: PanelBackdropProps) => JSX.Element { return this.cachedData["PanelBackdrop"] ?? this.updateCache("PanelBackdrop") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
