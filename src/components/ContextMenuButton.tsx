@@ -22,7 +22,9 @@ export type ContextMenuButtonProps = {
     menuTitle?: ReactNode,
     menuItems: ContextButtonMenuItemArray,
     menuDirection?: ContextMenuExpansion,
-    maxHeight?: number
+    maxHeight?: number,
+    /** Extra class(es) on the portaled menu container (not the tool button). */
+    menuClassName?: string,
 } & Omit<PropsToolButton, "onClick" | "onSelect" | "selected">
 /**
  * A vanilla `ToolButton` that opens a floating context menu (rendered via a Portal) when clicked.
@@ -48,23 +50,27 @@ export type ContextMenuButtonProps = {
  *   ]}
  * />
  */
-export const ContextMenuButton = (props: ContextMenuButtonProps) => {
+export const ContextMenuButton = ({
+    menuTitle,
+    menuItems,
+    menuDirection,
+    maxHeight,
+    menuClassName,
+    ...buttonProps
+}: ContextMenuButtonProps) => {
     const btnRef = useRef(null as any as HTMLDivElement);
     const menuRef = useRef(null as any as HTMLDivElement);
     const Button = VanillaComponentResolver.instance.ToolButton;
     const ScrollPanel = VanillaWidgets.instance.EditorScrollable;
 
-    const findFixedPosition = calculateElementPosition;
-    const menuPosition = findFixedPosition(btnRef.current)
     const [menuOpen, setMenuOpen] = useState(false);
 
     const [menuCss, setMenuCss] = useState({} as CSSProperties)
-    const menuDirection = props.menuDirection;
 
     useEffect(() => {
         if (!menuOpen) return;
-        setMenuCss(onRecalculateContextMenuPosition(btnRef, calculateElementPosition(btnRef.current)));
-    }, [menuOpen]);
+        setMenuCss(onRecalculateContextMenuPosition(btnRef, calculateElementPosition(btnRef.current), menuDirection));
+    }, [menuOpen, menuDirection]);
 
     useEffect(() => {
         if (!menuOpen) return;
@@ -84,13 +90,13 @@ export const ContextMenuButton = (props: ContextMenuButtonProps) => {
 
     return <>
         <div ref={btnRef}>
-            <Button {...props} selected={menuOpen} onSelect={() => { setMenuOpen(!menuOpen) }} />
+            <Button {...buttonProps} selected={menuOpen} onSelect={() => { setMenuOpen(!menuOpen) }} />
         </div>
         {menuOpen && <Portal>
-            <div className="k45_comm_contextMenu" style={menuCss} ref={menuRef}>
-                {props.menuTitle && <div className="k45_comm_contextMenu_title">{props.menuTitle}</div>}
-                <ScrollPanel style={{ maxHeight: props.maxHeight ?? "300rem" }}>
-                    {props.menuItems.map(x => x ? <button className={classNames("k45_comm_contextMenu_item", x.disabled ? "disabled" : "")} onClick={() => { setMenuOpen(false); x.action() }} disabled={x.disabled}>{x.label}</button> : <div className="k45_comm_contextMenu_separator" />)}
+            <div className={classNames("k45_comm_contextMenu", menuClassName)} style={menuCss} ref={menuRef}>
+                {menuTitle && <div className="k45_comm_contextMenu_title">{menuTitle}</div>}
+                <ScrollPanel style={{ maxHeight: maxHeight ?? "300rem" }}>
+                    {menuItems.map(x => x ? <button className={classNames("k45_comm_contextMenu_item", x.disabled ? "disabled" : "")} onClick={() => { setMenuOpen(false); x.action() }} disabled={x.disabled}>{x.label}</button> : <div className="k45_comm_contextMenu_separator" />)}
                 </ScrollPanel>
             </div>
         </Portal>
