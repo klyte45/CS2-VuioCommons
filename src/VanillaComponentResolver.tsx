@@ -74,6 +74,14 @@ type PropsSection = {
     children: ReactNode
 }
 
+type PropsInfoSectionFoldout = InfoSectionProps & {
+    header?: ReactNode
+    initialExpanded?: boolean
+    expandFromContent?: boolean
+    onToggleExpanded?: (expanded: boolean) => void
+    children?: ReactNode
+}
+
 type PropsDescriptionTooltip = {
     title: string | JSX.Element
     description: string | JSX.Element
@@ -300,6 +308,7 @@ const registryIndex = {
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
     RadioGroupToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "RadioGroupToggleField"],
     InfoSection: ["game-ui/game/components/selected-info-panel/shared-components/info-section/info-section.tsx", "InfoSection"],
+    InfoSectionFoldout: ["game-ui/game/components/selected-info-panel/shared-components/info-section/info-section-foldout.tsx", "InfoSectionFoldout"],
     InfoRow: ["game-ui/game/components/selected-info-panel/shared-components/info-row/info-row.tsx", "InfoRow"],
     TooltipRow: ["game-ui/game/components/selected-info-panel/shared-components/info-row/info-row.tsx", "TooltipRow"],
     ActiveFocusDiv: ["game-ui/common/focus/focus-div.tsx", "ActiveFocusDiv"],
@@ -374,6 +383,7 @@ export class VanillaComponentResolver {
     public get ToggleField(): (props: PropsToggleField) => JSX.Element { return this.cachedData["ToggleField"] ?? this.updateCache("ToggleField") }
     public get RadioGroupToggleField(): (props: PropsRadioGroupToggleField) => JSX.Element { return this.cachedData["RadioGroupToggleField"] ?? this.updateCache("RadioGroupToggleField") }
     public get InfoSection(): (props: InfoSectionProps & { children: ReactNode }) => JSX.Element { return this.cachedData["InfoSection"] ?? this.updateCache("InfoSection") }
+    public get InfoSectionFoldout(): (props: PropsInfoSectionFoldout) => JSX.Element { return this.cachedData["InfoSectionFoldout"] ?? this.updateCache("InfoSectionFoldout") }
     public get InfoRow(): (props: InfoRowProps) => JSX.Element { return this.cachedData["InfoRow"] ?? this.updateCache("InfoRow") }
     public get TooltipRow(): (props: any) => JSX.Element { return this.cachedData["TooltipRow"] ?? this.updateCache("TooltipRow") }
     public get ActiveFocusDiv(): (props: any) => JSX.Element { return this.cachedData["ActiveFocusDiv"] ?? this.updateCache("ActiveFocusDiv") }
