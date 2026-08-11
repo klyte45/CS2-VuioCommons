@@ -277,6 +277,24 @@ type PanelBackdropProps = {
     onMouseDown?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
+type ResponsiveChartProps = {
+    type: string,
+    data: any,
+    options?: any,
+    mergeCallback?: (existing: any, next: any) => any,
+    className?: string,
+} & HTMLAttributes<HTMLDivElement>
+
+type TrafficChartTheme = {
+    chartFontColor: string,
+    chartLineColor: string,
+    trafficVolumeBorderColor: string,
+    trafficVolumeBackgroundColor: string,
+    trafficFlowBorderColor: string,
+    trafficFlowBackgroundColor: string,
+    trafficChart: string,
+}
+
 const registryIndex = {
     RadioToggle: ["game-ui/common/input/toggle/radio-toggle/radio-toggle.tsx", "RadioToggle"],
     ToggleField: ["game-ui/menu/components/shared/game-options/toggle-field/toggle-field.tsx", "ToggleField"],
@@ -333,6 +351,8 @@ const registryIndex = {
     timeControlsTheme: ["game-ui/game/components/toolbar/bottom/time-controls/time-controls.module.scss", "classes"],
     panelTheme: ["game-ui/common/panel/panel.module.scss", "classes"],
     PanelBackdrop: ["game-ui/common/panel/panel-backdrop.tsx", "PanelBackdrop"],
+    ResponsiveChart: ["game-ui/common/charts/responsive-chart/responsive-chart.tsx", "ResponsiveChart"],
+    trafficChartTheme: ["game-ui/game/components/selected-info-panel/shared-components/traffic-charts/traffic-chart.module.scss", "classes"],
 }
 
 
@@ -417,6 +437,8 @@ export class VanillaComponentResolver {
     public get timeControlsTheme(): TimeControlsTheme { return this.cachedData["timeControlsTheme"] ?? this.updateCache("timeControlsTheme") }
     public get panelTheme(): PanelTheme { return this.cachedData["panelTheme"] ?? this.updateCache("panelTheme") }
     public get PanelBackdrop(): (props: PanelBackdropProps) => JSX.Element { return this.cachedData["PanelBackdrop"] ?? this.updateCache("PanelBackdrop") }
+    public get ResponsiveChart(): (props: ResponsiveChartProps) => JSX.Element { return this.cachedData["ResponsiveChart"] ?? this.updateCache("ResponsiveChart") }
+    public get trafficChartTheme(): TrafficChartTheme { return this.cachedData["trafficChartTheme"] ?? this.updateCache("trafficChartTheme") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
