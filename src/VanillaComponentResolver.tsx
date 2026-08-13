@@ -2,7 +2,7 @@
 import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
 import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
-import { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import { ForwardRefExoticComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, RefAttributes } from "react";
 import { Color01, ColorHSVA } from "./utils/ColorUtils";
 type PropsToggleField = {
     "value": any,
@@ -39,11 +39,18 @@ type PropsTooltip = {
 }
 
 export type PropsEllipsesTextInput = {
-    "value"?: string,
-    "maxLength"?: number,
-    "theme"?: Theme,
-    "className"?: string
-} & InputHTMLAttributes<PropsEllipsesTextInput>
+    value?: string
+    maxLength?: number
+    theme?: Theme
+    className?: string
+    /** Hide gamepad Select/Back hint chrome. */
+    disableHint?: boolean
+    forceHint?: boolean
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "maxLength" | "className">
+
+export type EllipsisTextInputComponent = ForwardRefExoticComponent<
+    PropsEllipsesTextInput & RefAttributes<HTMLInputElement>
+>
 
 export type PropsToolButton = {
     focusKey?: UniqueFocusKey | null
@@ -393,7 +400,7 @@ export class VanillaComponentResolver {
     public get DropdownToggle(): (props: DropdownToggleProps) => JSX.Element { return this.cachedData["DropdownToggle"] ?? this.updateCache("DropdownToggle") }
     public get IconButton(): (props: IconButtonProps) => JSX.Element { return this.cachedData["IconButton"] ?? this.updateCache("IconButton") }
     public get Tooltip(): (props: PropsTooltip) => JSX.Element { return this.cachedData["Tooltip"] ?? this.updateCache("Tooltip") }
-    public get EllipsisTextInput(): (props: PropsEllipsesTextInput) => JSX.Element { return this.cachedData["EllipsisTextInput"] ?? this.updateCache("EllipsisTextInput") }
+    public get EllipsisTextInput(): EllipsisTextInputComponent { return this.cachedData["EllipsisTextInput"] ?? this.updateCache("EllipsisTextInput") }
     public get ColorField(): (props: PropsColorField) => JSX.Element { return this.cachedData["ColorField"] ?? this.updateCache("ColorField") }
 
 
