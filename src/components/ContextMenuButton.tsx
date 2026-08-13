@@ -5,11 +5,15 @@ import { Portal } from "cs2/ui";
 import { CSSProperties, Dispatch, MutableRefObject, ReactNode, SetStateAction, useEffect, useRef, useState } from "react";
 import "./ContextMenuButton.scss"
 
-export type ContextButtonMenuItemArray = ({
+export type ContextButtonMenuItem = {
     label: ReactNode,
-    action: () => any,
+    /** Non-clickable section header inside the scroll list. */
+    subtitle?: boolean,
+    action?: () => any,
     disabled?: boolean
-} | null)[]
+}
+
+export type ContextButtonMenuItemArray = (ContextButtonMenuItem | null)[]
 
 export enum ContextMenuExpansion {
     BOTTOM_RIGHT,
@@ -28,9 +32,10 @@ export type ContextMenuButtonProps = {
 } & Omit<PropsToolButton, "onClick" | "onSelect" | "selected">
 /**
  * A vanilla `ToolButton` that opens a floating context menu (rendered via a Portal) when clicked.
- * The menu can contain labelled action items, disabled items, or separator nulls. Automatically
- * repositions itself to stay within the screen (bottom-right, bottom-left, top-right, or top-left)
- * unless a direction is forced via `menuDirection`. Closes on outside click.
+ * The menu can contain labelled action items, disabled items, non-clickable subtitle rows
+ * (`subtitle: true`), or separator nulls. Automatically repositions itself to stay within the
+ * screen (bottom-right, bottom-left, top-right, or top-left) unless a direction is forced via
+ * `menuDirection`. Closes on outside click.
  *
  * Used throughout the hierarchy view toolbar to group related actions (add node, export, import, paste)
  * behind a single button, preventing toolbar clutter.
@@ -46,6 +51,7 @@ export type ContextMenuButtonProps = {
  *     { label: "Add root",    action: () => addRoot() },
  *     { label: "Add child",   action: () => addChild(), disabled: !hasSelection },
  *     null,
+ *     { label: "Other", subtitle: true },
  *     { label: "Add sibling", action: () => addSibling() },
  *   ]}
  * />
@@ -96,7 +102,32 @@ export const ContextMenuButton = ({
             <div className={classNames("k45_comm_contextMenu", menuClassName)} style={menuCss} ref={menuRef}>
                 {menuTitle && <div className="k45_comm_contextMenu_title">{menuTitle}</div>}
                 <ScrollPanel style={{ maxHeight: maxHeight ?? "300rem" }}>
-                    {menuItems.map(x => x ? <button className={classNames("k45_comm_contextMenu_item", x.disabled ? "disabled" : "")} onClick={() => { setMenuOpen(false); x.action() }} disabled={x.disabled}>{x.label}</button> : <div className="k45_comm_contextMenu_separator" />)}
+                    {menuItems.map((x, i) => {
+                        if (!x) {
+                            return <div key={`sep_${i}`} className="k45_comm_contextMenu_separator" />;
+                        }
+                        if (x.subtitle) {
+                            return (
+                                <div key={`sub_${i}`} className="k45_comm_contextMenu_subtitle">
+                                    {x.label}
+                                </div>
+                            );
+                        }
+                        return (
+                            <button
+                                key={`item_${i}`}
+                                type="button"
+                                className={classNames("k45_comm_contextMenu_item", x.disabled ? "disabled" : "")}
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    x.action?.();
+                                }}
+                                disabled={x.disabled}
+                            >
+                                {x.label}
+                            </button>
+                        );
+                    })}
                 </ScrollPanel>
             </div>
         </Portal>

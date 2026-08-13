@@ -60,6 +60,18 @@
         color: var(--textColorDimmest);
     }
 
+    .k45_comm_contextMenu_subtitle {
+        color: var(--textColorDimmest);
+        font-size: var(--fontSizeXS);
+        font-weight: bold;
+        text-transform: uppercase;
+        padding-top: 8rem;
+        padding-bottom: 4rem;
+        padding-left: 10rem;
+        padding-right: 10rem;
+        pointer-events: none;
+    }
+
     max-height: 600rem;
     min-width: 100rem;
     max-width: 500rem;
