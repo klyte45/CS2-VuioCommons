@@ -111,17 +111,32 @@
 
         .k45_fileItemsListing_item {
             display: flex;
+            flex-direction: row;
             width: 50%;
-            align-items: center;
             font-size: var(--fontSizeS);
             padding: 5rem;
             overflow-x: hidden;
-            overflow-y: hidden;
+            align-items: center;
 
-            img {
+            img.k45_fileItemIcon {
                 height: 20rem;
                 width: 20rem;
                 margin-right: 5rem;
+                flex-shrink: 0;
+                margin-top: 2rem;
+            }
+
+            .k45_fileItemsListing_itemBody {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                min-width: 0;
+            }
+
+            .k45_fileItemsListing_itemName {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             &.selected {
@@ -129,7 +144,17 @@
                 color: var(--selectedTextColorDark) !important;
             }
 
-            &:hover {
+            &.invalid {
+                opacity: 0.45;
+                color: var(--textColorDimmer);
+
+                &:hover {
+                    background-color: transparent;
+                    color: var(--textColorDimmer);
+                }
+            }
+
+            &:hover:not(.invalid) {
                 background-color: var(--menuControl2);
                 color: var(--menuActiveColorBright);
             }
