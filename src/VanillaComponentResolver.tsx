@@ -458,9 +458,9 @@ export class VanillaComponentResolver {
     public get trafficChartTheme(): TrafficChartTheme { return this.cachedData["trafficChartTheme"] ?? this.updateCache("trafficChartTheme") }
 
 
-    static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string }[], tooltip?: React.ReactNode) {
+    static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string, tooltip?: React.ReactNode }[], tooltip?: React.ReactNode) {
         return <VanillaComponentResolver.instance.InfoSection disableFocus={true} tooltip={tooltip}>
-            {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} icon={x.icon} />)}
+            {rows.map((x, i) => <VanillaComponentResolver.instance.InfoRow key={i} uppercase={x.uppercase} left={x.left} right={x.right} icon={x.icon} tooltip={x.tooltip} />)}
         </VanillaComponentResolver.instance.InfoSection>;
     }
 

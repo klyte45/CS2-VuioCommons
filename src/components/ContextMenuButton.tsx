@@ -29,6 +29,8 @@ export type ContextMenuButtonProps = {
     maxHeight?: number,
     /** Extra class(es) on the portaled menu container (not the tool button). */
     menuClassName?: string,
+    /** Keep the tool-button selected look even when the menu is closed. */
+    selected?: boolean,
 } & Omit<PropsToolButton, "onClick" | "onSelect" | "selected">
 /**
  * A vanilla `ToolButton` that opens a floating context menu (rendered via a Portal) when clicked.
@@ -62,6 +64,7 @@ export const ContextMenuButton = ({
     menuDirection,
     maxHeight,
     menuClassName,
+    selected,
     ...buttonProps
 }: ContextMenuButtonProps) => {
     const btnRef = useRef(null as any as HTMLDivElement);
@@ -96,7 +99,7 @@ export const ContextMenuButton = ({
 
     return <>
         <div ref={btnRef}>
-            <Button {...buttonProps} selected={menuOpen} onSelect={() => { setMenuOpen(!menuOpen) }} />
+            <Button {...buttonProps} selected={menuOpen || !!selected} onSelect={() => { setMenuOpen(!menuOpen) }} />
         </div>
         {menuOpen && <Portal>
             <div className={classNames("k45_comm_contextMenu", menuClassName)} style={menuCss} ref={menuRef}>
