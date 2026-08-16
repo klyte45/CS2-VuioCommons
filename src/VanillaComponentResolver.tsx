@@ -2,7 +2,7 @@
 import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
 import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps, UISound } from "cs2/ui";
-import { ForwardRefExoticComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, RefAttributes } from "react";
+import { Context, ForwardRefExoticComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, RefAttributes } from "react";
 import { Color01, ColorHSVA } from "./utils/ColorUtils";
 type PropsToggleField = {
     "value": any,
@@ -325,6 +325,75 @@ type GlossaryPanelTheme = {
     sectionParagraph: string,
 }
 
+type FoldoutItemProps = {
+    header: ReactNode,
+    theme?: Theme | any,
+    type?: "Item" | "Group" | "Category",
+    nesting?: number,
+    initialExpanded?: boolean,
+    expanded?: boolean,
+    expandFromContent?: boolean,
+    onSelect?: () => void,
+    onToggleExpanded?: (expanded: boolean) => void,
+    className?: string,
+    children?: ReactNode,
+}
+
+type FoldoutItemHeaderProps = {
+    onClick?: () => void,
+    onFocusChange?: (focused: boolean) => void,
+    children?: ReactNode,
+}
+
+type TextInputProps = {
+    focusKey?: UniqueFocusKey | null,
+    debugName?: string,
+    type?: string,
+    value?: string,
+    selectAllOnFocus?: boolean,
+    placeholder?: ReactNode,
+    vkTitle?: ReactNode,
+    vkDescription?: ReactNode,
+    disabled?: boolean,
+    forceHint?: boolean,
+    showHint?: boolean,
+    className?: string,
+    multiline?: boolean | number,
+    onFocus?: (e: any) => void,
+    onBlur?: (e: any) => void,
+    onKeyDown?: (e: any) => void,
+    onChange?: (e: any) => void,
+    onMouseUp?: (e: any) => void,
+    onSelect?: () => void,
+    onBack?: () => void,
+    onDoubleClick?: (e: any) => void,
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "placeholder" | "value" | "type" | "onChange" | "onSelect">
+
+export type ScrollableContextValue = {
+    container: HTMLElement | null,
+    scrollTo: (x: number, y: number) => void,
+    scrollBy: (x: number, y: number) => void,
+    smoothScrollTo: (x: number, y: number) => void,
+    scrollIntoView: (element: Element) => void,
+    scrollToTop: (element: Element) => void,
+    updateThumbs: () => void,
+}
+
+type SearchFieldProps = {
+    value: string,
+    onChange: (value: string) => void,
+    placeholder?: ReactNode,
+    theme?: Theme | any,
+}
+
+type SearchFieldGlossaryTheme = {
+    searchField: string,
+    input: string,
+    actions: string,
+    action: string,
+    popupMinHeight: string,
+}
+
 type TrafficChartTheme = {
     chartFontColor: string,
     chartLineColor: string,
@@ -395,6 +464,14 @@ const registryIndex = {
     ResponsiveChart: ["game-ui/common/charts/responsive-chart/responsive-chart.tsx", "ResponsiveChart"],
     trafficChartTheme: ["game-ui/game/components/selected-info-panel/shared-components/traffic-charts/traffic-chart.module.scss", "classes"],
     glossaryPanelTheme: ["game-ui/game/components/glossary-panel/glossary-panel.module.scss", "classes"],
+    FoldoutItem: ["game-ui/common/foldout/foldout-item.tsx", "FoldoutItem"],
+    FoldoutItemHeader: ["game-ui/common/foldout/foldout-item.tsx", "FoldoutItemHeader"],
+    glossaryFoldoutTheme: ["game-ui/common/foldout/themes/glossary-item.module.scss", "classes"],
+    glossarySubFoldoutTheme: ["game-ui/common/foldout/themes/glossary-sub-item.module.scss", "classes"],
+    TextInput: ["game-ui/common/input/text/text-input.tsx", "TextInput"],
+    SearchField: ["game-ui/editor/widgets/search-field/search-field.tsx", "SearchField"],
+    ScrollableContext: ["game-ui/common/scrolling/scrollable-context.ts", "ScrollableContext"],
+    searchFieldGlossaryTheme: ["game-ui/editor/widgets/search-field/themes/search-field-glossary.module.scss", "classes"],
 }
 
 
@@ -483,6 +560,14 @@ export class VanillaComponentResolver {
     public get ResponsiveChart(): (props: ResponsiveChartProps) => JSX.Element { return this.cachedData["ResponsiveChart"] ?? this.updateCache("ResponsiveChart") }
     public get trafficChartTheme(): TrafficChartTheme { return this.cachedData["trafficChartTheme"] ?? this.updateCache("trafficChartTheme") }
     public get glossaryPanelTheme(): GlossaryPanelTheme { return this.cachedData["glossaryPanelTheme"] ?? this.updateCache("glossaryPanelTheme") }
+    public get FoldoutItem(): (props: FoldoutItemProps) => JSX.Element { return this.cachedData["FoldoutItem"] ?? this.updateCache("FoldoutItem") }
+    public get FoldoutItemHeader(): (props: FoldoutItemHeaderProps) => JSX.Element { return this.cachedData["FoldoutItemHeader"] ?? this.updateCache("FoldoutItemHeader") }
+    public get glossaryFoldoutTheme(): Theme | any { return this.cachedData["glossaryFoldoutTheme"] ?? this.updateCache("glossaryFoldoutTheme") }
+    public get glossarySubFoldoutTheme(): Theme | any { return this.cachedData["glossarySubFoldoutTheme"] ?? this.updateCache("glossarySubFoldoutTheme") }
+    public get TextInput(): ForwardRefExoticComponent<TextInputProps & RefAttributes<HTMLInputElement>> { return this.cachedData["TextInput"] ?? this.updateCache("TextInput") }
+    public get SearchField(): (props: SearchFieldProps) => JSX.Element { return this.cachedData["SearchField"] ?? this.updateCache("SearchField") }
+    public get ScrollableContext(): Context<ScrollableContextValue> { return this.cachedData["ScrollableContext"] ?? this.updateCache("ScrollableContext") }
+    public get searchFieldGlossaryTheme(): SearchFieldGlossaryTheme { return this.cachedData["searchFieldGlossaryTheme"] ?? this.updateCache("searchFieldGlossaryTheme") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string, tooltip?: React.ReactNode }[], tooltip?: React.ReactNode) {
