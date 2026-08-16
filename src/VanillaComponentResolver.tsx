@@ -1,7 +1,7 @@
 
 import { FocusKey, Theme, UniqueFocusKey } from "cs2/bindings";
 import { getModule } from "cs2/modding";
-import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps } from "cs2/ui";
+import { ButtonProps, DropdownProps, DropdownToggleProps, IconButtonProps, InfoRowProps, InfoSectionProps, UISound } from "cs2/ui";
 import { ForwardRefExoticComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, RefAttributes } from "react";
 import { Color01, ColorHSVA } from "./utils/ColorUtils";
 type PropsToggleField = {
@@ -125,6 +125,7 @@ type TabProps = {
     disabled?: boolean,
     locked?: boolean,
     className?: string,
+    selectSound?: UISound | string | null,
     children: ReactNode,
     onSelect: (id: string) => any
 }
@@ -300,6 +301,30 @@ type ResponsiveChartProps = {
     className?: string,
 } & HTMLAttributes<HTMLDivElement>
 
+type GlossaryPanelTheme = {
+    glossaryPanel: string,
+    glossaryPanelTabBar: string,
+    glossaryPanelTab: string,
+    tabIcon: string,
+    categoryIcon: string,
+    container: string,
+    topBar: string,
+    bottom: string,
+    filterBar: string,
+    contentFilterButton: string,
+    searchBar: string,
+    categoryBrowser: string,
+    textHighlight: string,
+    scrollable: string,
+    content: string,
+    categoryHeader: string,
+    categoryTitle: string,
+    sectionLink: string,
+    sectionHeader: string,
+    sectionTitle: string,
+    sectionParagraph: string,
+}
+
 type TrafficChartTheme = {
     chartFontColor: string,
     chartLineColor: string,
@@ -369,6 +394,7 @@ const registryIndex = {
     PanelBackdrop: ["game-ui/common/panel/panel-backdrop.tsx", "PanelBackdrop"],
     ResponsiveChart: ["game-ui/common/charts/responsive-chart/responsive-chart.tsx", "ResponsiveChart"],
     trafficChartTheme: ["game-ui/game/components/selected-info-panel/shared-components/traffic-charts/traffic-chart.module.scss", "classes"],
+    glossaryPanelTheme: ["game-ui/game/components/glossary-panel/glossary-panel.module.scss", "classes"],
 }
 
 
@@ -456,6 +482,7 @@ export class VanillaComponentResolver {
     public get PanelBackdrop(): (props: PanelBackdropProps) => JSX.Element { return this.cachedData["PanelBackdrop"] ?? this.updateCache("PanelBackdrop") }
     public get ResponsiveChart(): (props: ResponsiveChartProps) => JSX.Element { return this.cachedData["ResponsiveChart"] ?? this.updateCache("ResponsiveChart") }
     public get trafficChartTheme(): TrafficChartTheme { return this.cachedData["trafficChartTheme"] ?? this.updateCache("trafficChartTheme") }
+    public get glossaryPanelTheme(): GlossaryPanelTheme { return this.cachedData["glossaryPanelTheme"] ?? this.updateCache("glossaryPanelTheme") }
 
 
     static CreateInfoSection(rows: { left: React.ReactNode, right?: React.ReactNode, uppercase?: boolean, icon?: string, tooltip?: React.ReactNode }[], tooltip?: React.ReactNode) {
