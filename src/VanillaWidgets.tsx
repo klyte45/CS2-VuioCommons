@@ -138,9 +138,11 @@ export type ItemPickerProps = {
 
 export type CheckboxProps = {
     showHint?: boolean,
-    checked: boolean,
+    checked?: boolean,
+    multistate?: boolean,
     disabled?: boolean,
-    onChange: (value: boolean) => any,
+    onChange?: (value: boolean) => any,
+    onMultistateChange?: (value: boolean | undefined) => any,
     className?: string
 }
 
