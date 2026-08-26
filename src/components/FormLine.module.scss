@@ -4,7 +4,7 @@
     align-items: center;
     min-height: 36rem;
     padding: 4rem 8rem;
-    border-bottom: 1rem solid var(--dividerColor, rgba(255, 255, 255, 0.1));
+    border-bottom: 1rem solid var(--dividerColor);
 }
 
 .compact {
@@ -19,13 +19,13 @@
 }
 
 .title {
-    color: var(--normalTextColor, #eaf1f4);
-    font-size: calc(14rem * var(--fontScale, 1));
+    color: var(--menuText1Normal);
+    font-size: calc(14rem * var(--fontScale));
 }
 
 .subtitle {
-    color: var(--normalTextColorDim, rgba(234, 241, 244, 0.7));
-    font-size: calc(12rem * var(--fontScale, 1));
+    color: var(--textColorDim);
+    font-size: calc(12rem * var(--fontScale));
 }
 
 .content {

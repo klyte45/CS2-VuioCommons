@@ -5,6 +5,7 @@ import { ContextMenuButton } from "./ContextMenuButton";
 import { ReactNode } from "react";
 import { ListActionTypeArray } from "./ListWithPreviewTab";
 import { FocusDisabled } from "cs2/input";
+import "./ListWithPreviewTab.scss";
 
 type Props = {
     listItems: (string | { section?: string, emptyPlaceholder?: string, displayName?: undefined } | { displayName: string, value: string })[],
@@ -55,25 +56,27 @@ export const ListWithContentTab = ({ listItems, listActions, onChangeSelection, 
                     )}
                 </div>
             </FocusDisabled>}
-            {listItems.length ? <VanillaWidgets.instance.EditorScrollable className="k45_tabWithPreview_listContent">
-                {listItems.map(x => {
-                    if (typeof x == "string") {
-                        return <button onClick={() => onChangeSelection(x)} className={classNames(x == selectedKey ? "selected" : "")}>{x}</button>
-                    } else if (typeof x.displayName == "string") {
-                        return <button onClick={() => onChangeSelection(x.value)} className={classNames(x.value == selectedKey ? "selected" : "")}>{x.displayName}</button>
-                    } else {
-                        if (x.section) {
-                            return <div className="k45_listSection">{x.section}</div>
+            {listItems.length ? <FocusDisabled>
+                <VanillaWidgets.instance.EditorScrollable className="k45_tabWithPreview_listContent">
+                    {listItems.map(x => {
+                        if (typeof x == "string") {
+                            return <button onClick={() => onChangeSelection(x)} className={classNames(x == selectedKey ? "selected" : "")}>{x}</button>
+                        } else if (typeof x.displayName == "string") {
+                            return <button onClick={() => onChangeSelection(x.value)} className={classNames(x.value == selectedKey ? "selected" : "")}>{x.displayName}</button>
+                        } else {
+                            if (x.section) {
+                                return <div className="k45_listSection">{x.section}</div>
+                            }
+                            if (x.emptyPlaceholder) {
+                                return <div className="k45_emptyPlaceholder">{x.emptyPlaceholder}</div>
+                            }
                         }
-                        if (x.emptyPlaceholder) {
-                            return <div className="k45_emptyPlaceholder">{x.emptyPlaceholder}</div>
-                        }
-                    }
-                })}
-            </VanillaWidgets.instance.EditorScrollable> : <div className="k45_tabWithPreview_emptyListMsg">{emptyListMsg ?? "List is empty"}</div>}
+                    })}
+                </VanillaWidgets.instance.EditorScrollable>
+            </FocusDisabled> : <div className="k45_tabWithPreview_emptyListMsg">{emptyListMsg ?? "List is empty"}</div>}
         </div>
         <div className={classNames("k45_tabWithContent_body", bodyClasses)}>
-            {children}
+            <FocusDisabled>{children}</FocusDisabled>
         </div>
     </div >;
 };

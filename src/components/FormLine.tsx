@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { FocusDisabled } from "cs2/input";
+import { VanillaWidgets } from "../VanillaWidgets";
 import styles from "./FormLine.module.scss";
 
 type Props = {
@@ -19,16 +21,27 @@ export const FormLine = ({
     subtitle,
     tooltip,
     children,
-}: Props) => (
-    <div
-        className={[styles.formLine, compact ? styles.compact : "", className ?? ""].filter(Boolean).join(" ")}
-        onClick={() => onClick?.()}
-        data-tooltip={tooltip}
-    >
-        <div className={styles.label}>
-            <div className={styles.title}>{title}</div>
-            {subtitle != null && subtitle !== "" && <div className={styles.subtitle}>{subtitle}</div>}
+}: Props) => {
+    const editor = VanillaWidgets.instance.editorItemModule;
+
+    return (
+        <div
+            className={[
+                editor.row,
+                styles.formLine,
+                compact ? styles.compact : "",
+                className ?? "",
+            ].filter(Boolean).join(" ")}
+            onClick={() => onClick?.()}
+            data-tooltip={tooltip}
+        >
+            <div className={[editor.label, styles.label].join(" ")}>
+                <div className={styles.title}>{title}</div>
+                {subtitle != null && subtitle !== "" && <div className={styles.subtitle}>{subtitle}</div>}
+            </div>
+            <div className={[editor.control, styles.content].join(" ")}>
+                <FocusDisabled>{children}</FocusDisabled>
+            </div>
         </div>
-        <div className={styles.content}>{children}</div>
-    </div>
-);
+    );
+};

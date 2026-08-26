@@ -3,6 +3,7 @@
 .k45_tabWithContent_content {
     display: flex;
     flex-grow: 1;
+    flex-shrink: 1;
 
     [class^=content_] {
         flex-grow: 1;
@@ -89,6 +90,8 @@
         max-height: 100%;
         flex-shrink: 1;
         flex-direction: column;
+
+        @extend %buttonsStyle;
 
         .k45_tabWithPreview_noneSelectedMsg {
             position: absolute;
