@@ -2,6 +2,7 @@ import { VanillaComponentResolver } from "../VanillaComponentResolver";
 import { PropsDropdownField, VanillaWidgets } from "../VanillaWidgets";
 import { Portal } from "cs2/ui";
 import { useState } from "react";
+import engine from "cohtml/cohtml";
 import "./BaseStringInputDialog.scss";
 
 type DropwdownDialogProps<T> = {
@@ -19,7 +20,7 @@ type DropwdownDialogProps<T> = {
  * is called without arguments. All other props are forwarded to `DropdownField` (except `style`,
  * `onChange`, and `translate` which are controlled internally).
  *
- * The confirm button label uses the translation key `"loadBtn"`; cancel uses `"cancelBtn"`.
+ * The confirm button label uses the translation key `"loadBtn"`; cancel uses `Common.CANCEL`.
  *
  * @example
  * <DropdownDialog<string>
@@ -50,7 +51,7 @@ export const DropdownDialog = <T,>(props: DropwdownDialogProps<T>) => {
                 title={title}
                 buttons={<div className="k45_dialogBtns">
                     <button className="positiveBtn" onClick={() => onConfirm(value)}>{translate("loadBtn")}</button>
-                    <button className="negativeBtn" onClick={() => onConfirm()}>{translate("cancelBtn")}</button>
+                    <button className="negativeBtn" onClick={() => onConfirm()}>{engine.translate("Common.CANCEL")}</button>
                 </div>}>
                 <div className="k45_dialogMessage">
                     <p>{promptText}</p>

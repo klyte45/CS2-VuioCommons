@@ -1,6 +1,7 @@
 import { VanillaComponentResolver } from "../VanillaComponentResolver";
 import { VanillaWidgets } from "../VanillaWidgets";
 import { useState } from "react";
+import engine from "cohtml/cohtml";
 import "./BaseStringInputDialog.scss";
 
 type BaseStringInputDialogProps = {
@@ -18,7 +19,8 @@ type BaseStringInputDialogProps = {
  * a confirm button (disabled until the value is non-empty or passes `validationFn`), and a cancel
  * button. Does **not** manage its own Portal or visibility — wrap with `StringInputDialog` for that.
  *
- * Both button labels are obtained through the `translate` prop; use keys `"saveBtn"` and `"cancelBtn"`.
+ * Both button labels are obtained through the `translate` prop for confirm (`"saveBtn"`);
+ * cancel uses the game locale key `Common.CANCEL`.
  *
  * @example
  * // Used internally by StringInputDialog and StringInputWithOverrideDialog:
@@ -43,7 +45,7 @@ export const BaseStringInputDialog = ({ onConfirm: callback, dialogTitle: title,
         title={title}
         buttons={<div className="k45_dialogBtns">
             {<button className="positiveBtn" onClick={() => callback(name)} disabled={validationFn ? !validationFn(name) : !name.trim()}>{translate("saveBtn")}</button>}
-            <button className="negativeBtn" onClick={() => callback()}>{translate("cancelBtn")}</button>
+            <button className="negativeBtn" onClick={() => callback()}>{engine.translate("Common.CANCEL")}</button>
         </div>}>
         <div className="k45_dialogMessage">
             <p>{promptText}</p>

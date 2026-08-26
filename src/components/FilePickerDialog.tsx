@@ -213,7 +213,7 @@ const BaseFilePickerDialog = ({ onConfirm: callback, dialogTitle: title, dialogP
         title={title}
         buttons={<div className="k45_dialogBtns">
             <button className="positiveBtn" disabled={okDisabled} onClick={() => callback(currentData[value].fullPath)}>{engine.translate("Common.OK")}</button>
-            <button className="negativeBtn" onClick={() => callback()}>{translate("cancelBtn")}</button>
+            <button className="negativeBtn" onClick={() => callback()}>{engine.translate("Common.CANCEL")}</button>
         </div>}>
         <div className="k45_dialogMessage">
             <p>{promptText}</p>
