@@ -15,6 +15,9 @@ export * from './src/components/K45HierarchyMenu'
 export * from './src/components/FormLine'
 export * from './src/components/ErrorBoundary'
 
+export * from './src/components/whatsNew'
+export * from './src/utils/vanillaScrollable'
+
 export * from './src/utils/VanillaFnResolver'
 export * from './src/utils/name.utils'
 export * from './src/utils/Entity'
