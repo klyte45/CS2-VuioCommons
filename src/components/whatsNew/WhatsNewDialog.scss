@@ -1,0 +1,143 @@
+@import "../BaseStringInputDialog.scss";
+
+%whatsNewDialog_anchor {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10000;
+
+    >* {
+        pointer-events: auto;
+    }
+}
+
+%whatsNewDialog_panel {
+    width: 75vw;
+    max-width: 1200rem;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+%whatsNewDialog_titleBar {
+    width: 100%;
+}
+
+%whatsNewDialog_content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 60vh;
+    padding-top: 8rem;
+    padding-right: 12rem;
+    padding-bottom: 12rem;
+    padding-left: 12rem;
+    flex-shrink: 1;
+}
+
+%whatsNewDialog_scrollable {
+    flex: 0 1 auto;
+    min-height: 0;
+    max-height: calc(60vh - 160rem);
+}
+
+%whatsNewDialog_scrollRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 1;
+}
+
+%whatsNewDialog_body {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-left: 12rem;
+}
+
+%whatsNewDialog_thumbnail {
+    flex: 0 0 auto;
+    width: 400rem;
+    height: 400rem;
+    padding: 0;
+    display: block;
+}
+
+%whatsNewDialog_footer {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+%whatsNewDialog_checkboxRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20rem;
+    justify-content: center;
+    margin-bottom: 10rem;
+}
+
+%whatsNewDialog_checkboxLabel {
+    margin-left: 8rem;
+    font-size: var(--fontSizeS);
+}
+
+%whatsNewDialog_actions {
+    margin-top: 10rem;
+}
+
+@mixin whatsNewDialog($acronym) {
+    .#{$acronym}-whatsNewDialog_anchor {
+        @extend %whatsNewDialog_anchor;
+    }
+
+    .#{$acronym}-whatsNewDialog_panel {
+        @extend %whatsNewDialog_panel;
+    }
+
+    .#{$acronym}-whatsNewDialog_titleBar {
+        @extend %whatsNewDialog_titleBar;
+    }
+
+    .#{$acronym}-whatsNewDialog_content {
+        @extend %whatsNewDialog_content;
+    }
+
+    .#{$acronym}-whatsNewDialog_scrollable {
+        @extend %whatsNewDialog_scrollable;
+    }
+
+    .#{$acronym}-whatsNewDialog_scrollRow {
+        @extend %whatsNewDialog_scrollRow;
+    }
+
+    .#{$acronym}-whatsNewDialog_body {
+        @extend %whatsNewDialog_body;
+    }
+
+    .#{$acronym}-whatsNewDialog_thumbnail {
+        @extend %whatsNewDialog_thumbnail;
+    }
+
+    .#{$acronym}-whatsNewDialog_footer {
+        @extend %whatsNewDialog_footer;
+    }
+
+    .#{$acronym}-whatsNewDialog_checkboxRow {
+        @extend %whatsNewDialog_checkboxRow;
+    }
+
+    .#{$acronym}-whatsNewDialog_checkboxLabel {
+        @extend %whatsNewDialog_checkboxLabel;
+    }
+
+    .#{$acronym}-whatsNewDialog_actions {
+        @extend %whatsNewDialog_actions;
+    }
+}
