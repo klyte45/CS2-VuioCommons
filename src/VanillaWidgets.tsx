@@ -61,8 +61,8 @@ export type PropsDropdownField<T> = {
 type PropsEditorItemControl = { label?: string, children?: ReactNode, styleContent?: React.CSSProperties, className?: string }
 type PropsFocusableEditorItem = { disabled?: boolean, centered?: boolean, className?: string, focusKey?: UniqueFocusKey, onFocusChange?: () => any, children?: JSX.Element | JSX.Element[] | string }
 type PropsDirectoryPickerButton = { label: string, value: string, disabled?: boolean, className?: string, theme?: Theme, onOpenDirectoryBrowser: () => any }
-type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
-    onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true,
+type PropsStringInputField = { ref?: MutableRefObject<HTMLInputElement | HTMLTextAreaElement>, value: string, disabled?: boolean, onChange: (s: string) => any, className?: string, maxLength?: number } & ({
+    onChangeStart?: HTMLTextAreaElement['onfocus'], onChangeEnd?: HTMLTextAreaElement['onblur'], multiline: true | number,
 } | {
     onChangeStart?: HTMLInputElement['onfocus'], onChangeEnd?: HTMLInputElement['onblur'], multiline?: false | undefined,
 })
@@ -138,9 +138,11 @@ export type ItemPickerProps = {
 
 export type CheckboxProps = {
     showHint?: boolean,
-    checked: boolean,
+    checked?: boolean,
+    multistate?: boolean,
     disabled?: boolean,
-    onChange: (value: boolean) => any,
+    onChange?: (value: boolean) => any,
+    onMultistateChange?: (value: boolean | undefined) => any,
     className?: string
 }
 

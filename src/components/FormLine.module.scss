@@ -1,0 +1,35 @@
+.formLine {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 36rem;
+    padding: 4rem 8rem;
+    border-bottom: 1rem solid var(--dividerColor);
+}
+
+.compact {
+    min-height: 28rem;
+    padding: 2rem 8rem;
+}
+
+.label {
+    flex-shrink: 0;
+    width: 40%;
+    padding-right: 8rem;
+}
+
+.title {
+    color: var(--menuText1Normal);
+    font-size: calc(14rem * var(--fontScale));
+}
+
+.subtitle {
+    color: var(--textColorDim);
+    font-size: calc(12rem * var(--fontScale));
+}
+
+.content {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}

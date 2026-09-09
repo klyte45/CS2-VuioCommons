@@ -12,6 +12,8 @@ export * from './src/components/StringInputWithOverrideDialog'
 export * from './src/components/FilePickerDialog'
 export * from './src/components/DropdownDialog'
 export * from './src/components/K45HierarchyMenu'
+export * from './src/components/FormLine'
+export * from './src/components/ErrorBoundary'
 
 export * from './src/components/whatsNew'
 export * from './src/utils/vanillaScrollable'

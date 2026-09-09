@@ -38,9 +38,9 @@ export class MultiUIValueReadOnlyBinding<T, U = T> {
 }
 
 type ConstructorReturnType<P> = P extends new (name: string) => MultiUIValueBinding<infer R> ? MultiUIValueBinding<R> : never
-type ConstructorObjectToInstancesObject<P> = Omit<{ [key in keyof P]: ConstructorReturnType<P[key]> }, `_${string}`>
+export type ConstructorObjectToInstancesObject<P> = Omit<{ [key in keyof P]: ConstructorReturnType<P[key]> }, `_${string}`>
 type alpha = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'
-type BindingClassObj = {
+export type BindingClassObj = {
     _prefix: string,
     [key: `${alpha}${string}`]: new (...x: any[]) => any
 }
