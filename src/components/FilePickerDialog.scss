@@ -33,7 +33,7 @@
 .k45_currentFolder {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    min-width: 100%;
     align-items: stretch;
 
     .hidden {
