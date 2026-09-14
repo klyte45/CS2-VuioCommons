@@ -139,7 +139,7 @@ export function VectorSectionEditable({ title, valueGetterFormatted, valueGetter
                                         }}
                                         autoFocus={true}
                                         onFocus={e => {
-                                            e.target.selectionStart = e.target.value.length;
+                                            e.currentTarget.selectionStart = 0;
                                         }}
                                         onDoubleClick={e => {
                                             e.currentTarget.selectionStart = 0;
